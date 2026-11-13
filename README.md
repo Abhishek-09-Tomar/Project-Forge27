@@ -10,7 +10,7 @@
 [![LeetCode](https://img.shields.io/badge/LeetCode-Abhishek__Tomar__99-FFA116?style=for-the-badge&logo=leetcode&logoColor=white)](https://leetcode.com/u/Abhishek_Tomar_99/)
 [![Codeforces](https://img.shields.io/badge/Codeforces-Abhishek__Tomar-1F8ACB?style=for-the-badge&logo=codeforces&logoColor=white)](https://codeforces.com/profile/Abhishek_Tomar)
 
-**Start:** November 13, 2026 &nbsp;|&nbsp; **Target:** July 13, 2027 &nbsp;|&nbsp; **Duration:** 8 months
+**Start:** November 14, 2026 &nbsp;|&nbsp; **Target:** July 14, 2027 &nbsp;|&nbsp; **Duration:** 8 months
 
 **Primary target:** Software Development Engineer / Backend Engineer  
 **Specialization:** Java Backend Engineering + Applied AI  
