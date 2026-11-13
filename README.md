@@ -482,22 +482,28 @@ I will maintain **two parallel tracks**:
 This roadmap can coexist with the existing **My-CPP-Journey** repository. The directories below describe an **intended organization**, not a claim that they all currently exist.
 
 ```text
-My-CPP-Journey/
-├── README.md                     # This career roadmap + repository overview
-├── ROADMAP.md                    # Optional detailed C++ / DSA syllabus
-├── CONTRIBUTING.md
-├── LICENSE
-├── CODE_OF_CONDUCT.md
-├── setup/                        # Tooling and compiler setup
-├── basics/                       # C++ fundamentals and STL
-├── dsa/                          # Data structures and algorithms
-├── patterns/                     # Interview problem-solving patterns
-├── competitive_programming/     # Contest practice and upsolving
-├── projects/                     # C++ mini-projects and experiments
-├── notes/                        # CS fundamentals, cheat sheets
-├── tests/                        # Test cases and utilities
-└── progress/                     # Milestones and weekly reviews
-    └── weekly/
+Project-Forge27/
+│
+├── README.md
+├── ROADMAP.md
+│
+├── 01-programming-foundations/
+├── 02-dsa-and-problem-solving/
+├── 03-core-computer-science/
+├── 04-backend-engineering/
+├── 05-databases-and-sql/
+├── 06-cloud-and-devops/
+├── 07-ai-engineering/
+├── 08-system-design/
+│
+├── projects/
+├── interview-preparation/
+├── progress/
+│   ├── daily/
+│   ├── weekly/
+│   └── monthly/
+│
+└── resources/
 ```
 
 **Scope:** C++ / DSA solutions belong in this repository. Larger Java, backend, and AI products can live in **separate repositories** and be linked from this roadmap so each has an independent README, tests and release history.
