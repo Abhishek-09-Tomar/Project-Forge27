@@ -1,0 +1,3733 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>AI-Integrated Backend Engineer — 60-Day Command Center</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #0b1020;
+      --panel: #151e31;
+      --panel2: #1c2940;
+      --ink: #f1f5ff;
+      --muted: #aebbd0;
+      --accent: #6ee7c6;
+      --accent2: #83a8ff;
+      --line: #33415b;
+      --warn: #ffc978;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: radial-gradient(ellipse at top right,
+          #172544,
+          var(--bg) 58%);
+      color: var(--ink);
+      font: 15px/1.5 system-ui, -apple-system, Segoe UI, sans-serif;
+    }
+
+    a {
+      color: #a9c9ff;
+    }
+
+    button,
+    input,
+    select,
+    textarea {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+      border: 1px solid var(--line);
+      background: var(--panel2);
+      color: var(--ink);
+      padding: 9px 12px;
+      border-radius: 10px;
+    }
+
+    button:hover {
+      border-color: var(--accent);
+    }
+
+    button:focus-visible,
+    a:focus-visible,
+    input:focus-visible,
+    textarea:focus-visible {
+      outline: 3px solid var(--accent);
+    }
+
+    button.primary {
+      background: #1d594d;
+      border-color: #347a6a;
+    }
+
+    button.active {
+      background: #26485e;
+      border-color: var(--accent);
+    }
+
+    button:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+    }
+
+    header {
+      padding: 30px max(20px, calc((100vw - 1280px) / 2));
+      border-bottom: 1px solid var(--line);
+    }
+
+    h1 {
+      font-size: clamp(27px, 4vw, 44px);
+      letter-spacing: -1px;
+      margin: 0 0 5px;
+    }
+
+    .eyebrow {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    header p {
+      color: var(--muted);
+      max-width: 820px;
+      margin: 8px 0 0;
+    }
+
+    .wrap {
+      max-width: 1320px;
+      margin: auto;
+      padding: 20px;
+    }
+
+    .tabs {
+      display: flex;
+      gap: 7px;
+      flex-wrap: wrap;
+      position: sticky;
+      top: 0;
+      background: #0c1425ee;
+      backdrop-filter: blur(12px);
+      padding: 12px 0;
+      z-index: 5;
+      border-bottom: 1px solid var(--line);
+    }
+
+    section.page {
+      display: none;
+      padding-top: 18px;
+    }
+
+    section.page.active {
+      display: block;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 15px;
+      padding: 19px;
+    }
+
+    .card h3 {
+      margin: 0 0 8px;
+      font-size: 17px;
+    }
+
+    .card p {
+      color: var(--muted);
+    }
+
+    .stat {
+      font-size: 32px;
+      font-weight: 750;
+      line-height: 1.25;
+    }
+
+    .label {
+      color: var(--muted);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .big {
+      grid-column: span 2;
+    }
+
+    .wide {
+      grid-column: 1/-1;
+    }
+
+    .bar {
+      background: #2c3951;
+      height: 9px;
+      border-radius: 30px;
+      overflow: hidden;
+      margin: 10px 0;
+    }
+
+    .bar>div {
+      height: 100%;
+      background: linear-gradient(90deg, #6ee7c6, #83a8ff);
+      width: 0;
+      transition: width 0.2s;
+    }
+
+    .phase {
+      display: grid;
+      grid-template-columns: 190px 1fr 50px;
+      align-items: center;
+      gap: 10px;
+      margin: 13px 0;
+    }
+
+    .sub {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .controls {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+      margin: 15px 0;
+    }
+
+    input,
+    select,
+    textarea {
+      background: #0f192b;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      color: var(--ink);
+      padding: 10px;
+    }
+
+    input[type='search'] {
+      width: min(360px, 100%);
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 110px;
+      resize: vertical;
+    }
+
+    input[type='checkbox'] {
+      accent-color: var(--accent);
+      width: 18px;
+      height: 18px;
+    }
+
+    .days {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 12px;
+    }
+
+    .day {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 13px;
+      padding: 15px;
+    }
+
+    .day.done {
+      border-color: #337a68;
+    }
+
+    .day-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      align-items: flex-start;
+    }
+
+    .day h3 {
+      margin: 0;
+      font-size: 16px;
+    }
+
+    .day p {
+      margin: 8px 0;
+      color: var(--muted);
+    }
+
+    .tag {
+      font-size: 11px;
+      color: var(--accent);
+      border: 1px solid #356656;
+      padding: 3px 7px;
+      border-radius: 30px;
+      display: inline-block;
+    }
+
+    .day .deliver {
+      color: #dce8f8;
+    }
+
+    .two {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .answers {
+      display: grid;
+      gap: 8px;
+      margin: 18px 0;
+    }
+
+    .answers button {
+      text-align: left;
+    }
+
+    .answers button.correct {
+      border-color: #6ee7c6;
+      background: #204b42;
+    }
+
+    .answers button.incorrect {
+      border-color: #ff9f9f;
+      background: #503039;
+    }
+
+    .explain {
+      border-left: 3px solid var(--accent);
+      padding-left: 13px;
+      color: var(--muted);
+    }
+
+    .challenge {
+      display: flex;
+      align-items: start;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .resource {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: start;
+    }
+
+    .resource a {
+      font-weight: 650;
+    }
+
+    .resource p {
+      margin: 5px 0;
+    }
+
+    .tiny {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .footer {
+      margin: 45px 0 20px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    canvas {
+      max-width: 100%;
+    }
+
+    details summary {
+      cursor: pointer;
+      font-weight: 650;
+    }
+
+    code,
+    pre {
+      background: #0c1425;
+      border-radius: 8px;
+    }
+
+    pre {
+      overflow: auto;
+      padding: 15px;
+      font-size: 13px;
+    }
+
+    .pill {
+      border: 1px solid var(--line);
+      border-radius: 50px;
+      padding: 5px 8px;
+      font-size: 12px;
+    }
+
+    .accent {
+      color: var(--accent);
+    }
+
+    @media (max-width: 900px) {
+      .grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .big {
+        grid-column: span 2;
+      }
+
+      .phase {
+        grid-template-columns: 120px 1fr 40px;
+      }
+    }
+
+    @media (max-width: 560px) {
+
+      .grid,
+      .two {
+        grid-template-columns: 1fr;
+      }
+
+      .big {
+        grid-column: span 1;
+      }
+
+      .phase {
+        grid-template-columns: 1fr 55px;
+      }
+
+      .phase .bar {
+        grid-column: 1/-1;
+        grid-row: 2;
+      }
+
+      .wrap {
+        padding: 12px;
+      }
+
+      .tabs {
+        top: 0;
+      }
+
+      header {
+        padding: 20px;
+      }
+    }
+
+    .callout {
+      border-left: 3px solid var(--accent);
+      padding: 10px 15px;
+      background: #111d2d;
+      border-radius: 8px;
+      margin: 12px 0;
+    }
+
+    .ai-proof {
+      color: var(--ink);
+      margin: 8px 0;
+    }
+
+    .output {
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+      background: #0c1425;
+      padding: 14px;
+      border-radius: 10px;
+      min-height: 48px;
+    }
+
+    .meter {
+      height: 8px;
+      background: #26364c;
+      border-radius: 9px;
+      overflow: hidden;
+    }
+
+    .meter>div {
+      height: 100%;
+      background: var(--accent);
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      margin: 10px 0;
+    }
+
+    .field input,
+    .field select {
+      width: 100%;
+    }
+
+    .stack {
+      display: grid;
+      gap: 12px;
+    }
+
+    .card h4 {
+      margin: 10px 0;
+    }
+
+    .status {
+      color: var(--accent);
+      font-size: 13px;
+    }
+
+    .tabs {
+      max-height: 33vh;
+      overflow: auto;
+    }
+
+    @media (max-width: 560px) {
+      .tabs {
+        position: relative;
+        max-height: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="eyebrow">
+      Java • Spring Boot • Distributed Systems • Applied AI
+    </div>
+    <h1>AI-Integrated Backend Engineer Command Center</h1>
+    <p>
+      60 days • Core backend engineering + AI-assisted development +
+      production LLM integration. Keep the ledger deterministic; build a
+      separate read-only AI assistant.
+    </p>
+  </header>
+  <div class="wrap">
+    <nav class="tabs" aria-label="Sections">
+      <button class="active" data-tab="dashboard">Overview</button><button data-tab="roadmap">60-day
+        roadmap</button><button data-tab="ai">AI track</button><button data-tab="mentor">AI mentor</button><button
+        data-tab="sandbox">AI playground</button><button data-tab="quiz">MCQ practice</button><button
+        data-tab="challenges">Labs & tests</button><button data-tab="resources">Free resources</button><button
+        data-tab="notes">Notes & backup</button>
+    </nav>
+    <section id="dashboard" class="page active">
+      <div class="grid">
+        <div class="card">
+          <div class="label">Days completed</div>
+          <div class="stat" id="daysCount">0/60</div>
+          <div class="bar">
+            <div id="mainBar"></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="label">Labs completed</div>
+          <div class="stat" id="labsCount">0/38</div>
+          <div class="bar">
+            <div id="labBar"></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="label">Quiz accuracy</div>
+          <div class="stat" id="quizAccuracy">—</div>
+          <div class="sub" id="quizAttempts">0 attempts</div>
+        </div>
+        <div class="card">
+          <div class="label">Next day</div>
+          <div class="stat" id="nextDay">1</div>
+          <button onclick="switchTab('roadmap')">Open roadmap</button>
+        </div>
+        <div class="card big">
+          <h3>AI track progress</h3>
+          <div class="stat" id="aiCount">0/60</div>
+          <div class="bar">
+            <div id="aiBar"></div>
+          </div>
+          <p class="sub" id="aiQuizStat"></p>
+          <button onclick="switchTab('ai')">Open AI track</button>
+        </div>
+        <div class="card big">
+          <h3>AI integration architecture</h3>
+          <p class="sub">
+            Client → Spring Boot gateway → authenticated retrieval + read-only
+            tools → model adapter → local/hosted inference. PostgreSQL ledger
+            and Kafka stay independent of inference availability.
+          </p>
+          <button onclick="switchTab('sandbox')">
+            Try the AI playground
+          </button>
+        </div>
+        <div class="card big">
+          <h3>Learning phase progress</h3>
+          <div id="phaseBars"></div>
+        </div>
+        <div class="card big">
+          <h3>Proof-of-work checklist</h3>
+          <p>
+            Show evidence that your backend is correct, robust, and
+            reviewable—not just feature complete.
+          </p>
+          <div id="milestones"></div>
+        </div>
+        <div class="card wide">
+          <h3>Execution strategy</h3>
+          <div class="two">
+            <div>
+              <strong>Original intensive track (10 hours/day)</strong>
+              <p class="sub">
+                2.5h DSA + SQL • 5h backend • 1.5h system design • 1h
+                review/jobs. A stretch schedule, not a requirement.
+              </p>
+            </div>
+            <div>
+              <strong>Sustainable track (3–4 hours/day)</strong>
+              <p class="sub">
+                45m concepts • 90m building • 45m debugging/testing • 30m
+                recall. Use the day numbers as learning units, not calendar
+                deadlines.
+              </p>
+            </div>
+          </div>
+          <p class="tiny">
+            Strong warning: 24/7 free cloud hosting, 1,000 RPS, 5 million
+            rows, and low p99 latency depend on platform limits, workload and
+            hardware. Do not claim performance that you have not measured.
+          </p>
+        </div>
+      </div>
+    </section>
+    <section id="roadmap" class="page">
+      <h2>Daily learning roadmap</h2>
+      <p class="sub">
+        Each day includes a core concept, a concrete artifact, and a parallel
+        AI activity. AI progress is tracked separately in the AI track. Check
+        off only after producing evidence in code, tests or notes.
+      </p>
+      <div class="controls">
+        <input id="daySearch" type="search" placeholder="Search days, SQL, Kafka..." /><select id="phaseFilter">
+          <option value="all">All phases</option>
+        </select><select id="dayFilter">
+          <option value="all">All days</option>
+          <option value="todo">Incomplete</option>
+          <option value="done">Complete</option>
+        </select><button id="resetFilter">Clear filters</button>
+      </div>
+      <div id="days" class="days"></div>
+    </section>
+    <section id="ai" class="page">
+      <h2>Applied AI • parallel 60-day track</h2>
+      <p class="sub">
+        Add 30–60 minutes per learning day, or extend the schedule. Finish
+        core work first; use AI activities as optional stretch until you have
+        time. The original core days and AI days have separate completion
+        states.
+      </p>
+      <div class="card">
+        <h3>Flagship project: Wallet Intelligence Service</h3>
+        <div class="two">
+          <div>
+            <p>
+              <strong>Core:</strong> authenticated REST API, double-entry
+              PostgreSQL ledger, transactional outbox, Kafka and Redis. No
+              model participates in financial decisions, writes or
+              authorization.
+            </p>
+            <p>
+              <strong>AI:</strong> read-only explanations using verified
+              transaction facts, help-desk RAG over synthetic FAQ documents,
+              bounded tool calls and offline evaluation.
+            </p>
+          </div>
+          <div>
+            <p>
+              <strong>Architecture:</strong> Auth → AI gateway → tenant-scoped
+              retrieval → provider adapter → local model. Validate every
+              result; deterministic fallback if model unavailable. Keep AI
+              outside the critical transaction path.
+            </p>
+            <p>
+              <strong>Milestones:</strong> day 20 fake-model tests; day 30
+              demo; day 37 read-only tools; day 48 evaluation and failure
+              drill; day 60 portfolio audit.
+            </p>
+          </div>
+        </div>
+        <div class="callout">
+          <strong>Compatibility:</strong> retain Java 21 and Spring Boot 3.x
+          for core work. Select Spring AI versions compatible with your Boot
+          release using its official compatibility guidance. If a newer AI
+          version needs a different Boot major, isolate it in a separate
+          service or migrate deliberately. Never mix incompatible dependency
+          versions.
+        </div>
+      </div>
+      <div class="controls">
+        <input id="aiSearch" type="search" placeholder="Search AI topics..." /><select id="aiPhase">
+          <option value="all">All phases</option>
+        </select><select id="aiFilter">
+          <option value="all">All activities</option>
+          <option value="todo">Incomplete</option>
+          <option value="done">Complete</option>
+        </select><button id="aiNext">Next incomplete AI activity</button>
+      </div>
+      <div id="aiDays" class="days"></div>
+    </section>
+    <section id="mentor" class="page">
+      <h2>AI mentor & engineering copilot</h2>
+      <p class="sub">
+        Generate a context-aware prompt for any day and use it in an AI
+        assistant. Or connect your own local Ollama model for actual
+        generation inside this dashboard. Offline prompt generation does not
+        run a model.
+      </p>
+      <div class="two">
+        <div class="card stack">
+          <h3>Configure your session</h3>
+          <label class="field">Roadmap day<select id="mentorDay"></select></label><label class="field">Mentor
+            mode<select id="mentorMode">
+              <option value="tutor">Socratic tutor</option>
+              <option value="coding">Coding coach</option>
+              <option value="debug">Debugging partner</option>
+              <option value="test">Test engineer</option>
+              <option value="review">Code/security reviewer</option>
+              <option value="design">System design interviewer</option>
+              <option value="quiz">MCQ generator</option>
+              <option value="interview">Mock interviewer</option>
+            </select></label><label class="field">Your question or sanitized code/logs<textarea id="mentorInput"
+              placeholder="Describe the issue. Include expected vs observed behavior, version and minimal reproduction. Never paste secrets, private code, account data or production logs."></textarea></label><button
+            class="primary" id="buildPrompt">
+            Build mentor prompt</button><label class="field">Prompt (editable)<textarea id="mentorPrompt"
+              rows="10"></textarea>
+          </label>
+          <div class="controls">
+            <button id="copyPrompt">Copy prompt</button><a href="https://chatgpt.com/" target="_blank"
+              rel="noopener noreferrer">Open ChatGPT ↗</a>
+          </div>
+          <div id="copyStatus" class="status" role="status"></div>
+        </div>
+        <div class="card stack">
+          <h3>Optional live local model</h3>
+          <p>
+            Install
+            <a href="https://ollama.com/" target="_blank" rel="noopener noreferrer">Ollama</a>
+            and download a small compatible model, e.g.
+            <code>ollama pull qwen2.5-coder:3b</code>. Model quality, hardware
+            and license vary. You can also use any installed local model name.
+          </p>
+          <p>
+            From the directory containing this HTML, start a loopback-only web
+            server:
+          </p>
+          <pre>python -m http.server 8000 --bind 127.0.0.1</pre>
+          <p>
+            Then open this HTML from <code>http://127.0.0.1:8000/</code>.
+            Start Ollama if it is not already running. Keep port 11434
+            private. If blocked by CORS, consult the Ollama FAQ and permit
+            only the exact local page origin; never allow all origins.
+          </p>
+          <p class="tiny">
+            The dashboard makes requests only to http://127.0.0.1:11434 when
+            you click a connection button. No cloud API key is requested or
+            saved. Use a downloaded model, not a cloud model; disable cloud
+            functionality in Ollama if local-only processing matters. Model
+            output is untrusted and shown as plain text; no tool calls or code
+            execution.
+          </p>
+          <label class="field">Installed model name<input id="localModel" value="qwen2.5-coder:3b"
+              placeholder="Installed Ollama model" /></label>
+          <div class="controls">
+            <button id="checkModel">List installed models</button><button class="primary" id="askModel">
+              Send prompt to local model</button><button id="cancelModel" disabled>Cancel</button>
+          </div>
+          <div class="status" role="status" id="modelStatus">
+            Not connected. Prompt builder is available offline.
+          </div>
+          <div class="output" id="modelOutput" aria-live="polite">
+            Model responses will appear here.
+          </div>
+          <p class="tiny">
+            Model replies and mentor inputs are not saved to progress. Copy
+            useful sanitized evidence into your notes manually. This is a
+            single-turn mentor; use follow-up prompts to provide necessary
+            context.
+          </p>
+        </div>
+      </div>
+    </section>
+    <section id="sandbox" class="page">
+      <h2>AI engineering playground</h2>
+      <p class="sub">
+        Run deterministic, in-browser learning exercises without installing a
+        model. These are simplified simulations of trusted application logic,
+        not actual embeddings or language-model inference.
+      </p>
+      <div class="two">
+        <div class="card">
+          <h3>1 · Retrieval & tenant isolation</h3>
+          <p>
+            Experiment with a toy keyword retrieval system over synthetic
+            documents. The selected tenant is a simulation of authenticated
+            identity; a real server obtains identity from verified
+            authentication, never a client field.
+          </p>
+          <label class="field">Synthetic caller<select id="ragTenant">
+              <option value="A">Tenant A</option>
+              <option value="B">Tenant B</option>
+            </select></label><label class="field">Query<input id="ragQuery"
+              value="How do I reset my payment PIN?" /></label><label class="field">Top k
+            <select id="ragK">
+              <option>1</option>
+              <option selected>2</option>
+              <option>3</option>
+            </select></label><button class="primary" id="runRag">Run retrieval</button>
+          <div id="ragOutput" class="output"></div>
+          <details>
+            <summary>Inspect toy corpus and expected behavior</summary>
+            <div id="ragCorpus"></div>
+            <p class="tiny">
+              Scores count matching unique meaningful words; lexical retrieval
+              is not vector similarity. Only authorized sources are ranked.
+              Real RAG adds generation and independent grounding evaluation.
+            </p>
+          </details>
+        </div>
+        <div class="card">
+          <h3>2 · Structured output validator</h3>
+          <p>
+            Edit a hypothetical model response. Application code requires a
+            known status, nonempty explanation, and authorized citation IDs.
+            This checks schema and policy only, not factual truth or semantic
+            grounding.
+          </p>
+          <label class="field">Response JSON<textarea id="jsonExample" rows="7">
+{"status":"ANSWERED","explanation":"A PIN can be reset in Settings.","citations":["A-01"]}</textarea></label><label
+            class="field">Authorized tenant<select id="jsonTenant">
+              <option>A</option>
+              <option>B</option>
+            </select></label>
+          <div class="controls">
+            <button class="primary" id="validateJson">
+              Validate response</button><button id="runRegression">Run 8 regression cases</button>
+          </div>
+          <div class="output" id="jsonOutput" aria-live="polite">
+            Ready to validate.
+          </div>
+          <details>
+            <summary>Contract</summary>
+            <p>
+              Exact fields: status (ANSWERED or UNKNOWN), explanation (1–300
+              chars), citations (unique IDs). ANSWERED must cite at least one
+              allowed ID. UNKNOWN must have no citations. Semantic truth
+              requires separate evidence checking.
+            </p>
+          </details>
+        </div>
+        <div class="card">
+          <h3>3 · Retrieval evaluation dashboard</h3>
+          <p>
+            Run six frozen synthetic cases at the selected top-k.
+            Positive-query recall averages per-query relevant-document
+            coverage. Unknown-query abstention here means zero retrieved hits,
+            not model abstention. Check failures rather than optimizing only
+            the aggregate.
+          </p>
+          <button class="primary" id="runEvals">Run evaluation suite</button>
+          <div class="output" id="evalOutput" aria-live="polite">
+            Run to see results.
+          </div>
+        </div>
+        <div class="card">
+          <h3>4 · Read-only tool policy lab</h3>
+          <p>
+            Simulate a proposed tool call. The dispatcher checks allowlist,
+            caller identity, argument shape and resource ownership before a
+            tool can run. No real tools are executed.
+          </p>
+          <label class="field">Caller<select id="toolTenant">
+              <option>A</option>
+              <option>B</option>
+            </select></label><label class="field">Proposed call<textarea id="toolInput" rows="5">
+{"name":"getTransactionStatus","arguments":{"id":"A-T1"}}</textarea></label><button class="primary" id="runTool">
+            Check tool authorization
+          </button>
+          <div class="output" id="toolOutput" aria-live="polite">Ready.</div>
+          <details>
+            <summary>Try negative cases</summary>
+            <p>
+              Use B-T1 for caller A; change the name to transferFunds; add an
+              unexpected argument; supply malformed JSON. All should be
+              denied.
+            </p>
+          </details>
+        </div>
+      </div>
+    </section>
+    <section id="quiz" class="page">
+      <h2>MCQ practice</h2>
+      <p class="sub">
+        60 explainable questions: original 20 core backend questions plus 40
+        new AI questions. Answers and scores are saved locally in this
+        browser.
+      </p>
+      <div class="controls">
+        <select id="quizCategory"></select><button id="shuffleQuiz">Shuffle questions</button><button
+          id="resetQuiz">Reset quiz score</button><span class="pill" id="quizPos"></span>
+      </div>
+      <div class="card" style="max-width: 850px">
+        <div class="tag" id="quizTag"></div>
+        <h2 id="question"></h2>
+        <div class="answers" id="answers"></div>
+        <div id="feedback" class="explain hidden"></div>
+        <div class="controls">
+          <button id="prevQuestion">Previous</button><button class="primary" id="nextQuestion">Next question</button>
+        </div>
+      </div>
+    </section>
+    <section id="challenges" class="page">
+      <h2>Hands-on labs and verification</h2>
+      <p class="sub">
+        Coding, debugging, integration, performance, fault injection and
+        design. Complete in your local IDE or repo; this dashboard tracks
+        completion but does not execute Java or grade source code.
+      </p>
+      <div class="controls">
+        <select id="labFilter">
+          <option value="all">All activity types</option>
+          <option>Coding</option>
+          <option>Debugging</option>
+          <option>Testing</option>
+          <option>Design</option>
+        </select><select id="labStatus">
+          <option value="all">All states</option>
+          <option value="todo">Incomplete</option>
+          <option value="done">Complete</option>
+        </select>
+      </div>
+      <div class="days" id="labs"></div>
+      <div class="card" style="margin-top: 18px">
+        <h3>Starter regression test (pseudocode)</h3>
+        <pre>
+given wallet A = 100.00, wallet B = 0.00
+when 100 concurrent requests transfer 10.00 from A to B
+then exactly 10 succeed
+and A = 0.00 and B = 100.00
+and every journal balances to zero
+and 90 failures create no partial entries
+and replay of successful idempotency key creates no extra transfer</pre>
+        <p class="tiny">
+          Run this against actual PostgreSQL transactions; outcome depends on
+          the chosen failure and retry contract.
+        </p>
+      </div>
+    </section>
+    <section id="resources" class="page">
+      <h2>Curated free learning resources</h2>
+      <p class="sub">
+        Prioritize official documentation for correctness, then interactive
+        practice and open-source examples. Reading material is free; some
+        exercises require an account, local compute, or paid hosted API calls.
+        Prefer local models or deterministic mocks.
+      </p>
+      <div class="controls">
+        <input id="resourceSearch" type="search" placeholder="Search resource names..." /><select id="resourceFilter">
+          <option value="all">All topics</option>
+        </select>
+      </div>
+      <div class="days" id="resourceList"></div>
+    </section>
+    <section id="notes" class="page">
+      <h2>Study notes & portable backup</h2>
+      <p>
+        Write down failures, root causes, benchmark commands, interview gaps
+        and proof links. Your notes, checkmarks and quiz history are stored in
+        this browser's local storage only.
+      </p>
+      <textarea id="notesText" rows="12"
+        placeholder="Today I learned...\nPR / GitHub link...\nObserved latency with reproducible workload...\nOpen questions..."></textarea>
+      <div class="controls">
+        <button class="primary" id="saveNotes">Save notes</button><button id="exportData">Export JSON
+          backup</button><label class="pill" style="cursor: pointer">Import JSON backup
+          <input id="importData" type="file" accept="application/json" hidden /></label><button id="clearAll">Erase
+          local progress</button>
+      </div>
+      <p class="tiny">
+        Use export for cross-device continuity. Importing replaces current
+        saved progress. Do not include secrets or access tokens in notes.
+      </p>
+    </section>
+    <div class="footer">
+      A learning companion, not a production runtime. Resources and free cloud
+      service terms can change. Validate current documentation and prices
+      before deployment.
+    </div>
+  </div>
+  <script id="payload" type="application/json">
+      {
+        "phases": [
+          [
+            "Foundation sprint",
+            1,
+            7,
+            "Java, concurrency, SQL, Linux, networking and design"
+          ],
+          [
+            "Spring & database",
+            8,
+            20,
+            "Production REST service, persistence, auth and testing"
+          ],
+          [
+            "Ledger & deployment",
+            21,
+            30,
+            "Correct money movement, contention, cache and release"
+          ],
+          [
+            "Distributed reliability",
+            31,
+            48,
+            "Kafka, outbox, observability, debugging and chaos"
+          ],
+          [
+            "Interview & portfolio",
+            49,
+            60,
+            "LLD machine coding, HLD and evidence-backed interviews"
+          ]
+        ],
+        "days": [
+          {
+            "day": 1,
+            "title": "Java 21 fundamentals",
+            "learn": "Records, sealed classes, generics, equals/hashCode, collections",
+            "deliver": "Implement immutable Money value object with tests",
+            "phase": 0,
+            "aiTitle": "AI workflow baseline",
+            "aiTask": "Ask a model to critique your Money object after writing it yourself; verify every suggestion with javac and JUnit.",
+            "aiProof": "Record one accepted and one rejected suggestion with evidence."
+          },
+          {
+            "day": 2,
+            "title": "Concurrency",
+            "learn": "volatile vs atomicity, locks, executor, virtual threads",
+            "deliver": "Implement bounded producer-consumer queue; reproduce/fix deadlock",
+            "phase": 0,
+            "aiTitle": "Concurrency pair programming",
+            "aiTask": "Ask for interleavings and a minimal reproducible deadlock; inspect the proposed lock order yourself.",
+            "aiProof": "Run a bounded stress test and document the actual thread dump."
+          },
+          {
+            "day": 3,
+            "title": "Advanced PostgreSQL",
+            "learn": "CTEs, windows, isolation, indexes, EXPLAIN",
+            "deliver": "Write 10 SQL queries and compare query plans",
+            "phase": 0,
+            "aiTitle": "AI-assisted SQL",
+            "aiTask": "Generate alternative window queries on a synthetic schema; compare EXPLAIN ANALYZE and result sets.",
+            "aiProof": "Show identical results and measured plans, not model guesses."
+          },
+          {
+            "day": 4,
+            "title": "Linux and OS",
+            "learn": "processes, file descriptors, signals, memory, ss, lsof",
+            "deliver": "Diagnose a process holding a port; write runbook",
+            "phase": 0,
+            "aiTitle": "Log analysis",
+            "aiTask": "Sanitize process logs; ask AI for three hypotheses ranked by evidence.",
+            "aiProof": "Verify using ss/lsof/journalctl and write a confirmed RCA."
+          },
+          {
+            "day": 5,
+            "title": "Networking",
+            "learn": "DNS, TCP, TLS, HTTP versions, proxies",
+            "deliver": "Trace an HTTP request through reverse proxy with curl",
+            "phase": 0,
+            "aiTitle": "Network troubleshooting",
+            "aiTask": "Ask AI to propose a diagnostic tree for a failing TLS connection.",
+            "aiProof": "Check curl verbose output and distinguish DNS, TCP and certificate errors."
+          },
+          {
+            "day": 6,
+            "title": "System design",
+            "learn": "queues, consistency, caching, sharding, capacity",
+            "deliver": "Draw a URL shortener with bottlenecks and tradeoffs",
+            "phase": 0,
+            "aiTitle": "Design critique",
+            "aiTask": "Use AI as an adversarial architecture reviewer for your URL shortener.",
+            "aiProof": "Write two ADRs with explicit workload assumptions and alternatives."
+          },
+          {
+            "day": 7,
+            "title": "LLD and Python refresh",
+            "learn": "SOLID, patterns, Python requests/asyncio",
+            "deliver": "Implement parking lot in Java and a Python API smoke test",
+            "phase": 0,
+            "aiTitle": "Prompting and context",
+            "aiTask": "Practice task, context, constraints, examples and output contracts; have AI review your LLD without solving first.",
+            "aiProof": "Compare two prompts against a fixed rubric; explain what improved."
+          },
+          {
+            "day": 8,
+            "title": "Spring Boot skeleton",
+            "learn": "Maven, profiles, auto-config, actuator",
+            "deliver": "Create task API skeleton, health endpoint and README",
+            "phase": 1,
+            "aiTitle": "LLM fundamentals",
+            "aiTask": "Study tokens, context window, sampling, hallucination and inference; run a small local model if hardware permits.",
+            "aiProof": "Document model/version, latency and one incorrect response; otherwise use a mock."
+          },
+          {
+            "day": 9,
+            "title": "REST contracts",
+            "learn": "DTOs, records, HTTP semantics, errors",
+            "deliver": "Design CRUD endpoints, consistent validation and errors",
+            "phase": 1,
+            "aiTitle": "Model API contract",
+            "aiTask": "Design POST /ai/explain with bounded input and structured error responses; inspect Ollama chat request/response.",
+            "aiProof": "Save an OpenAPI contract and a curl smoke test or recorded fixture."
+          },
+          {
+            "day": 10,
+            "title": "Dependency injection",
+            "learn": "bean scopes, lifecycle, constructor injection",
+            "deliver": "Refactor service for mocking and testability",
+            "phase": 1,
+            "aiTitle": "Spring AI adapter",
+            "aiTask": "Introduce a ModelGateway interface and Spring AI ChatClient implementation using a compatible release train.",
+            "aiProof": "Unit-test service with a fake gateway; model integration remains replaceable."
+          },
+          {
+            "day": 11,
+            "title": "Validation & paging",
+            "learn": "Bean Validation, sorting, pagination",
+            "deliver": "Add request validation and safe pagination",
+            "phase": 1,
+            "aiTitle": "Structured outputs",
+            "aiTask": "Map model output to an Explanation record; validate enum, lengths and required fields.",
+            "aiProof": "Test malformed JSON, refusal, extra fields and invalid business values."
+          },
+          {
+            "day": 12,
+            "title": "API documentation",
+            "learn": "OpenAPI, versioning, idempotent HTTP",
+            "deliver": "Publish OpenAPI; run curl contract checks",
+            "phase": 1,
+            "aiTitle": "Prompt registry",
+            "aiTask": "Version prompt templates alongside OpenAPI; separate trusted instructions from untrusted data.",
+            "aiProof": "Commit a prompt version and regression fixtures for two variants."
+          },
+          {
+            "day": 13,
+            "title": "JPA model",
+            "learn": "entities, transactions, dirty checking",
+            "deliver": "Map tenant/task/audit entities with constraints",
+            "phase": 1,
+            "aiTitle": "Data boundaries",
+            "aiTask": "Create synthetic wallet support documents with tenant, document ID and version; keep account PII out.",
+            "aiProof": "Write a data-flow diagram and classify every data field."
+          },
+          {
+            "day": 14,
+            "title": "Hibernate performance",
+            "learn": "N+1, fetch strategies, batching",
+            "deliver": "Reproduce N+1 and fix with query verification",
+            "phase": 1,
+            "aiTitle": "Embeddings",
+            "aiTask": "Compare exact keyword retrieval with embedding similarity; understand vector dimension and model version.",
+            "aiProof": "Create five queries, expected document IDs and a baseline retrieval score."
+          },
+          {
+            "day": 15,
+            "title": "SQL indexing",
+            "learn": "composite indexes, selectivity, query plans",
+            "deliver": "Seed realistic data and benchmark 3 queries",
+            "phase": 1,
+            "aiTitle": "PostgreSQL vector search",
+            "aiTask": "Create a separate pgvector table; compare exact search and an optional HNSW index on synthetic data.",
+            "aiProof": "Record recall@k and query plans; use tenant filters before results leave the service."
+          },
+          {
+            "day": 16,
+            "title": "Migrations",
+            "learn": "Flyway, schema evolution, rollback strategy",
+            "deliver": "Create repeatable startup migration test",
+            "phase": 1,
+            "aiTitle": "Document ingestion",
+            "aiTask": "Chunk public FAQ text, attach metadata, deduplicate by hash and version embedding migrations.",
+            "aiProof": "Reingestion is idempotent and old versions are removable."
+          },
+          {
+            "day": 17,
+            "title": "Connection pools",
+            "learn": "HikariCP, timeout, limits, slow queries",
+            "deliver": "Tune pool under bounded load with observations",
+            "phase": 1,
+            "aiTitle": "Model client resilience",
+            "aiTask": "Configure timeouts, bounded concurrency and backpressure around inference.",
+            "aiProof": "Fake a slow provider; health and ordinary API traffic remain responsive."
+          },
+          {
+            "day": 18,
+            "title": "Authentication",
+            "learn": "password hashing, JWT validation, refresh rotation",
+            "deliver": "Implement login, expiry and revoked refresh flow",
+            "phase": 1,
+            "aiTitle": "AI identity and secrets",
+            "aiTask": "Use server-managed credentials and scoped application auth; never put provider keys in client JS.",
+            "aiProof": "Unauthorized requests fail; CI checks synthetic secret patterns."
+          },
+          {
+            "day": 19,
+            "title": "Authorization",
+            "learn": "RBAC, tenant isolation, ownership",
+            "deliver": "Prove tenant A cannot read tenant B data",
+            "phase": 1,
+            "aiTitle": "Tenant-safe RAG",
+            "aiTask": "Enforce authorization in retrieval and tool execution using authenticated tenant context.",
+            "aiProof": "Cross-tenant search and citation tests return no foreign records."
+          },
+          {
+            "day": 20,
+            "title": "Testing pyramid",
+            "learn": "JUnit, Mockito, MockMvc, Testcontainers",
+            "deliver": "Run unit + Postgres integration tests in CI",
+            "phase": 1,
+            "aiTitle": "AI testing pyramid",
+            "aiTask": "Add fixtures for timeouts, refusal, malformed JSON and injection; use fake model in CI.",
+            "aiProof": "Deterministic unit/integration suite passes without internet."
+          },
+          {
+            "day": 21,
+            "title": "Ledger schema",
+            "learn": "double-entry invariants, decimal precision",
+            "deliver": "Build immutable journal, entries and balance query",
+            "phase": 2,
+            "aiTitle": "AI boundary for fintech",
+            "aiTask": "Design a read-only ledger explanation service. LLM never decides balance or authorizes transfers.",
+            "aiProof": "Document trust boundary and verify no write-capable model tools exist."
+          },
+          {
+            "day": 22,
+            "title": "Atomic transfers",
+            "learn": "DB transactions, balances, rollback",
+            "deliver": "Transfer funds atomically; prove sum(entries)=0",
+            "phase": 2,
+            "aiTitle": "Safe transaction explanation",
+            "aiTask": "Format deterministic SQL-derived transaction facts and ask AI to explain them in plain language.",
+            "aiProof": "All amounts and IDs come from verified facts; invalid output falls back to a template."
+          },
+          {
+            "day": 23,
+            "title": "Concurrency correctness",
+            "learn": "row locking, deterministic ordering",
+            "deliver": "Hammer shared wallet; confirm no negative balances",
+            "phase": 2,
+            "aiTitle": "AI concurrency review",
+            "aiTask": "Ask model to review transaction interleavings and identify lost updates; compare with actual tests.",
+            "aiProof": "Run simultaneous transfers with AI service disabled; invariants still hold."
+          },
+          {
+            "day": 24,
+            "title": "Idempotent transfers",
+            "learn": "unique keys, payload fingerprints, DB persistence",
+            "deliver": "Retry identical transfer; return same outcome",
+            "phase": 2,
+            "aiTitle": "AI request deduplication",
+            "aiTask": "Design a tenant-scoped cache key including prompt/model/document versions; separate it from transfer idempotency.",
+            "aiProof": "Test no cross-tenant cache hit; retries never duplicate a ledger write."
+          },
+          {
+            "day": 25,
+            "title": "Failure recovery",
+            "learn": "timeouts, unknown outcomes, reconciliation",
+            "deliver": "Simulate request timeout after commit and safely retry",
+            "phase": 2,
+            "aiTitle": "Model outage fallback",
+            "aiTask": "Simulate timeout and provider errors; return a clearly labeled deterministic explanation.",
+            "aiProof": "Core ledger remains available, with no partial state change."
+          },
+          {
+            "day": 26,
+            "title": "Redis use cases",
+            "learn": "cache-aside, TTL, invalidation",
+            "deliver": "Cache non-authoritative reads and invalidate appropriately",
+            "phase": 2,
+            "aiTitle": "RAG endpoint",
+            "aiTask": "Implement /ai/help with document retrieval, grounded context and document ID citations.",
+            "aiProof": "Reject unsupported claims or return an abstention; only allowed IDs appear."
+          },
+          {
+            "day": 27,
+            "title": "Rate limiting",
+            "learn": "token buckets, Redis Lua, fairness",
+            "deliver": "Implement limits; verify bursts and expiry",
+            "phase": 2,
+            "aiTitle": "AI quotas",
+            "aiTask": "Add per-tenant request and token budgets, maximum output and rate limiting.",
+            "aiProof": "Exceed quota and verify controlled 429 or documented alternative."
+          },
+          {
+            "day": 28,
+            "title": "Performance",
+            "learn": "load profiles, p95/p99, bottlenecks",
+            "deliver": "Run k6 steady load; publish baseline and methodology",
+            "phase": 2,
+            "aiTitle": "AI performance baseline",
+            "aiTask": "Measure time to first token, total latency, token counts and concurrency separately from ledger RPS.",
+            "aiProof": "Report model/hardware and p50/p95; no fabricated benchmarks."
+          },
+          {
+            "day": 29,
+            "title": "Containers & TLS",
+            "learn": "multi-stage Docker, Compose, secrets, reverse proxy",
+            "deliver": "Deploy staging with HTTPS and health checks",
+            "phase": 2,
+            "aiTitle": "AI deployment boundary",
+            "aiTask": "Run model locally or in private network; expose only authenticated gateway; keep model port private.",
+            "aiProof": "Docker config and threat model show no publicly exposed inference port."
+          },
+          {
+            "day": 30,
+            "title": "Release v1",
+            "learn": "CI, rollback, budget, portfolio",
+            "deliver": "Tag v1.0, publish reproducible demo and resume evidence",
+            "phase": 2,
+            "aiTitle": "AI release v1",
+            "aiTask": "Demo wallet plus read-only AI help, or mock-backed demo if model unavailable.",
+            "aiProof": "README lists real vs mocked features, privacy policy and reproducible steps."
+          },
+          {
+            "day": 31,
+            "title": "Kafka fundamentals",
+            "learn": "topics, partitions, offsets, consumer groups",
+            "deliver": "Consume notification event in separate worker",
+            "phase": 3,
+            "aiTitle": "Async AI workloads",
+            "aiTask": "Design Kafka jobs for document indexing, not core money writes.",
+            "aiProof": "Version job schema and handle duplicate job delivery."
+          },
+          {
+            "day": 32,
+            "title": "Outbox schema",
+            "learn": "transactional event persistence",
+            "deliver": "Write transfer + outbox record in same DB transaction",
+            "phase": 3,
+            "aiTitle": "AI indexing outbox",
+            "aiTask": "Record document updates and indexing intent in one transaction.",
+            "aiProof": "Crash after commit and recover without losing indexing intent."
+          },
+          {
+            "day": 33,
+            "title": "Outbox publisher",
+            "learn": "polling or CDC, retry, duplicates",
+            "deliver": "Publish pending events; recover after crash",
+            "phase": 3,
+            "aiTitle": "Indexing worker",
+            "aiTask": "Implement bounded batch worker with retry and embedding model metadata.",
+            "aiProof": "Repeated work produces the same logical index state."
+          },
+          {
+            "day": 34,
+            "title": "Consumer correctness",
+            "learn": "at-least-once delivery, deduplication",
+            "deliver": "Ensure duplicate event does not duplicate notification",
+            "phase": 3,
+            "aiTitle": "Stale document handling",
+            "aiTask": "Invalidate old chunks and scope retrieval to active versions.",
+            "aiProof": "Search after update or delete excludes stale content."
+          },
+          {
+            "day": 35,
+            "title": "Retries & DLT",
+            "learn": "poison messages, backoff, replay",
+            "deliver": "Route poison message to DLT and replay intentionally",
+            "phase": 3,
+            "aiTitle": "Provider retry policy",
+            "aiTask": "Classify 429, timeout, 5xx, invalid request and refusal; set bounded retry budget.",
+            "aiProof": "Fake provider demonstrates no retry storm and dead-letter handling."
+          },
+          {
+            "day": 36,
+            "title": "Event contracts",
+            "learn": "schema evolution, correlation IDs",
+            "deliver": "Version event schema and test backwards compatibility",
+            "phase": 3,
+            "aiTitle": "Prompt and model versions",
+            "aiTask": "Version evaluation dataset, prompt, model ID and embedding model with release artifacts.",
+            "aiProof": "One rollback restores a known configuration; incompatible vectors require reindexing."
+          },
+          {
+            "day": 37,
+            "title": "Event-driven integration",
+            "learn": "eventual consistency, ordering",
+            "deliver": "Demonstrate event lag without corrupting ledger",
+            "phase": 3,
+            "aiTitle": "Tool calling",
+            "aiTask": "Define allowlisted read-only tools getTransactionStatus and searchHelp; validate parameters and auth in Java.",
+            "aiProof": "Unauthorized ID and unknown tool calls fail before execution."
+          },
+          {
+            "day": 38,
+            "title": "Metrics",
+            "learn": "Micrometer, Prometheus, RED metrics",
+            "deliver": "Expose rate, errors, duration and database pool metrics",
+            "phase": 3,
+            "aiTitle": "AI observability",
+            "aiTask": "Instrument model request count, errors, tokens and latency; avoid raw prompt logging by default.",
+            "aiProof": "Dashboard metrics use bounded cardinality and redact synthetic secrets."
+          },
+          {
+            "day": 39,
+            "title": "Dashboards",
+            "learn": "Grafana, p95/p99, SLOs",
+            "deliver": "Create latency/error/saturation dashboard",
+            "phase": 3,
+            "aiTitle": "Evaluation dashboard",
+            "aiTask": "Build 30+ labeled queries including answerable, unanswerable, cross-tenant and adversarial examples.",
+            "aiProof": "Record recall@k, groundedness rubric, abstention and latency; explain limitations."
+          },
+          {
+            "day": 40,
+            "title": "Logging & traces",
+            "learn": "structured logs, MDC, trace correlation",
+            "deliver": "Follow one request across HTTP, DB and Kafka",
+            "phase": 3,
+            "aiTitle": "Tracing AI requests",
+            "aiTask": "Correlate API, retrieval and model spans; use request IDs and sanitized attributes.",
+            "aiProof": "One trace pinpoints slow retrieval versus inference without storing raw PII."
+          },
+          {
+            "day": 41,
+            "title": "Memory debugging",
+            "learn": "heap dump, GC, MAT/VisualVM",
+            "deliver": "Reproduce memory retention and document root cause",
+            "phase": 3,
+            "aiTitle": "Memory pressure",
+            "aiTask": "Profile large prompts, buffering and many simultaneous requests with heap metrics.",
+            "aiProof": "Cap payload size and demonstrate reduced retained objects."
+          },
+          {
+            "day": 42,
+            "title": "Thread debugging",
+            "learn": "jcmd, thread dumps, deadlocks",
+            "deliver": "Capture deadlock and remediate with proof",
+            "phase": 3,
+            "aiTitle": "Thread and cancellation",
+            "aiTask": "Simulate stalled inference and disconnected streaming clients.",
+            "aiProof": "Observe cancellation, bounded executor saturation and no leaked tasks."
+          },
+          {
+            "day": 43,
+            "title": "Fault injection",
+            "learn": "Redis unavailability and fallbacks",
+            "deliver": "Kill Redis; preserve ledger correctness",
+            "phase": 3,
+            "aiTitle": "Prompt injection defense",
+            "aiTask": "Treat retrieved text as untrusted; test direct/indirect injection in synthetic docs.",
+            "aiProof": "Model cannot bypass authorization or invoke non-allowlisted tools."
+          },
+          {
+            "day": 44,
+            "title": "Kafka outage",
+            "learn": "outbox persistence and catch-up",
+            "deliver": "Stop Kafka during transfers, restore and drain outbox",
+            "phase": 3,
+            "aiTitle": "Provider outage drill",
+            "aiTask": "Disable inference provider mid-load and measure fallback and recovery.",
+            "aiProof": "Ledger p95 and correctness remain within your declared target."
+          },
+          {
+            "day": 45,
+            "title": "DB degradation",
+            "learn": "timeouts, retry policy, pool exhaustion",
+            "deliver": "Prove controlled error handling under DB slowdown",
+            "phase": 3,
+            "aiTitle": "Vector database outage",
+            "aiTask": "Simulate unavailable vector store; do not invent a factual answer.",
+            "aiProof": "Endpoint returns explicit degraded/unknown response; ledger is unaffected."
+          },
+          {
+            "day": 46,
+            "title": "Large-table optimization",
+            "learn": "indexes, partitioning tradeoffs",
+            "deliver": "Explain query plans before/after optimization",
+            "phase": 3,
+            "aiTitle": "Retrieval tuning",
+            "aiTask": "Sweep chunk size, top-k and similarity threshold against frozen queries; compare lexical baseline.",
+            "aiProof": "Report recall, latency and answer quality trade-offs; keep held-out data separate."
+          },
+          {
+            "day": 47,
+            "title": "Security hardening",
+            "learn": "secrets, OWASP APIs, input limits, audits",
+            "deliver": "Run authorization regression and dependency scan",
+            "phase": 3,
+            "aiTitle": "AI threat model",
+            "aiTask": "Review OWASP GenAI risks, output validation, sensitive disclosure, model supply chain and quotas.",
+            "aiProof": "Add security regression checks and document residual risks."
+          },
+          {
+            "day": 48,
+            "title": "Final production evidence",
+            "learn": "chaos reports, load profile, RCA",
+            "deliver": "Publish reproducible benchmark + incident report",
+            "phase": 3,
+            "aiTitle": "AI release v2",
+            "aiTask": "Compare baseline vs revised retrieval and prompts; measure quality and operating cost or local compute.",
+            "aiProof": "Publish evaluation report, failure cases, architecture and demo with synthetic data."
+          },
+          {
+            "day": 49,
+            "title": "LLD: limiter",
+            "learn": "thread-safe token bucket and sliding window",
+            "deliver": "Code limiter from blank file in 75 minutes",
+            "phase": 4,
+            "aiTitle": "AI code-review drill",
+            "aiTask": "Write limiter unaided for 45 minutes; ask AI to find boundary cases after time ends.",
+            "aiProof": "Use tests to validate each finding; log time saved and errors introduced."
+          },
+          {
+            "day": 50,
+            "title": "LLD: booking",
+            "learn": "seat reservation, expiry and contention",
+            "deliver": "Code reservation flow with conflict tests",
+            "phase": 4,
+            "aiTitle": "Agent workflow design",
+            "aiTask": "Model a bounded booking assistant with read-only lookup and human approval for writes (design only).",
+            "aiProof": "Show approval state machine, timeouts, audit trail and denial path."
+          },
+          {
+            "day": 51,
+            "title": "LLD: expenses",
+            "learn": "split and debt minimization",
+            "deliver": "Code Splitwise with edge-case tests",
+            "phase": 4,
+            "aiTitle": "MCP fundamentals",
+            "aiTask": "Study tool discovery, transport and schema; expose a synthetic read-only help tool via Java MCP SDK or Spring AI.",
+            "aiProof": "Inspect capability list; authentication and tenant checks remain server-side."
+          },
+          {
+            "day": 52,
+            "title": "LLD: cache",
+            "learn": "LRU/LFU and concurrency",
+            "deliver": "Code O(1) LRU with tests",
+            "phase": 4,
+            "aiTitle": "Cache correctness for LLMs",
+            "aiTask": "Compare prompt cache, exact response cache and semantic cache; do not cache sensitive user responses across tenants.",
+            "aiProof": "Test invalidation on prompt/model/doc version change."
+          },
+          {
+            "day": 53,
+            "title": "LLD: elevators",
+            "learn": "scheduling/state transitions",
+            "deliver": "Code elevator state machine and tests",
+            "phase": 4,
+            "aiTitle": "Agent budgets",
+            "aiTask": "Design a bounded tool loop with max steps, deadline, per-tool policy and stop reason.",
+            "aiProof": "Simulate repeated tool requests and prove termination."
+          },
+          {
+            "day": 54,
+            "title": "LLD: pub-sub",
+            "learn": "topics, consumers, delivery",
+            "deliver": "Code in-memory pub-sub with shutdown tests",
+            "phase": 4,
+            "aiTitle": "Evaluation automation",
+            "aiTask": "Create CI gate using fixtures and optional manually triggered local inference tests.",
+            "aiProof": "Fail on deterministic regression; separately report stochastic eval variance."
+          },
+          {
+            "day": 55,
+            "title": "HLD: URL shortener",
+            "learn": "keys, storage, cache, scale",
+            "deliver": "Present capacity estimates and failure analysis",
+            "phase": 4,
+            "aiTitle": "AI HLD: knowledge assistant",
+            "aiTask": "Whiteboard gateway, retrieval, reranking, inference, telemetry and failure domains.",
+            "aiProof": "Capacity estimate, latency budget, security boundaries and fallback are explicit."
+          },
+          {
+            "day": 56,
+            "title": "HLD: messaging",
+            "learn": "ordering, fanout, delivery semantics",
+            "deliver": "Design notification/chat service tradeoffs",
+            "phase": 4,
+            "aiTitle": "AI HLD: model gateway",
+            "aiTask": "Design multi-provider adapter, routing, quotas, circuit breakers, versioning and data residency.",
+            "aiProof": "Compare local vs hosted options and cost/latency/quality trade-offs."
+          },
+          {
+            "day": 57,
+            "title": "HLD: location",
+            "learn": "geospatial indexing and freshness",
+            "deliver": "Design nearby-drivers service under constraints",
+            "phase": 4,
+            "aiTitle": "AI HLD: safe agent",
+            "aiTask": "Design read-only tools, scoped identity, human approvals, audit and bounded retries.",
+            "aiProof": "Identify trust boundaries and demonstrate fail-closed behavior in a sequence diagram."
+          },
+          {
+            "day": 58,
+            "title": "Mock interview I",
+            "learn": "DSA + SQL + coding",
+            "deliver": "Complete timed interview and write gap analysis",
+            "phase": 4,
+            "aiTitle": "AI mock interview",
+            "aiTask": "Use mentor to ask one question at a time, withholding solutions until you answer.",
+            "aiProof": "Explain RAG, embeddings, idempotency, and how you tested failure modes without AI help."
+          },
+          {
+            "day": 59,
+            "title": "Mock interview II",
+            "learn": "system design + incident debugging",
+            "deliver": "Present whiteboard and defend tradeoffs",
+            "phase": 4,
+            "aiTitle": "AI debugging interview",
+            "aiTask": "Ask mentor for a synthetic incident involving slow inference, leaked context or wrong retrieval.",
+            "aiProof": "Diagnose with evidence; propose a test and rollback, then verify independently."
+          },
+          {
+            "day": 60,
+            "title": "Portfolio audit",
+            "learn": "resume claims, demo, docs and next 90 days",
+            "deliver": "Verify all numbers; ship final README and plan",
+            "phase": 4,
+            "aiTitle": "AI portfolio audit",
+            "aiTask": "Document AI-assisted decisions and actual AI features; show before/after eval results and costs.",
+            "aiProof": "Ship tagged release, reproducible test commands, sanitized demo and honest resume claims."
+          }
+        ],
+        "resources": [
+          {
+            "category": "Java",
+            "title": "Dev.java — official learning center",
+            "url": "https://dev.java/learn/",
+            "why": "Modern language, collections, concurrency"
+          },
+          {
+            "category": "Java",
+            "title": "Java 21 API documentation",
+            "url": "https://docs.oracle.com/en/java/javase/21/docs/api/",
+            "why": "Precise standard library reference"
+          },
+          {
+            "category": "Spring",
+            "title": "Spring guides",
+            "url": "https://spring.io/guides",
+            "why": "Guided, runnable Spring applications"
+          },
+          {
+            "category": "Spring",
+            "title": "Spring Boot reference",
+            "url": "https://docs.spring.io/spring-boot/reference/",
+            "why": "Official configuration, security/testing entry points"
+          },
+          {
+            "category": "Spring",
+            "title": "Spring Security reference",
+            "url": "https://docs.spring.io/spring-security/reference/",
+            "why": "Authentication and authorization patterns"
+          },
+          {
+            "category": "Database",
+            "title": "PostgreSQL tutorial",
+            "url": "https://www.postgresql.org/docs/current/tutorial.html",
+            "why": "SQL and relational fundamentals"
+          },
+          {
+            "category": "Database",
+            "title": "PostgreSQL EXPLAIN",
+            "url": "https://www.postgresql.org/docs/current/using-explain.html",
+            "why": "Interpret query plans"
+          },
+          {
+            "category": "Database",
+            "title": "SQLBolt",
+            "url": "https://sqlbolt.com/",
+            "why": "Interactive SQL practice"
+          },
+          {
+            "category": "Database",
+            "title": "LeetCode SQL 50",
+            "url": "https://leetcode.com/studyplan/top-sql-50/",
+            "why": "SQL exercises; free access may be limited"
+          },
+          {
+            "category": "Testing",
+            "title": "JUnit 5 user guide",
+            "url": "https://junit.org/junit5/docs/current/user-guide/",
+            "why": "Unit and parameterized tests"
+          },
+          {
+            "category": "Testing",
+            "title": "Spring Boot testing docs",
+            "url": "https://docs.spring.io/spring-boot/reference/testing/spring-boot-applications.html",
+            "why": "Spring app test slices and integration"
+          },
+          {
+            "category": "Testing",
+            "title": "Testcontainers guides",
+            "url": "https://testcontainers.com/guides/",
+            "why": "Real DB tests with containers"
+          },
+          {
+            "category": "Testing",
+            "title": "Grafana k6 quickstart",
+            "url": "https://grafana.com/docs/k6/latest/examples/get-started-with-k6/",
+            "why": "Load tests, thresholds and metrics"
+          },
+          {
+            "category": "DevOps",
+            "title": "Docker getting started",
+            "url": "https://docs.docker.com/get-started/",
+            "why": "Containers and Compose"
+          },
+          {
+            "category": "DevOps",
+            "title": "GitHub Actions docs",
+            "url": "https://docs.github.com/en/actions",
+            "why": "CI workflows"
+          },
+          {
+            "category": "DevOps",
+            "title": "Linux Journey",
+            "url": "https://linuxjourney.com/",
+            "why": "Free Linux fundamentals"
+          },
+          {
+            "category": "Distributed",
+            "title": "Apache Kafka documentation",
+            "url": "https://kafka.apache.org/documentation/",
+            "why": "Producers, groups, delivery and operations"
+          },
+          {
+            "category": "Distributed",
+            "title": "Redis documentation",
+            "url": "https://redis.io/docs/latest/",
+            "why": "Caching, commands and Lua"
+          },
+          {
+            "category": "Observability",
+            "title": "Prometheus docs",
+            "url": "https://prometheus.io/docs/introduction/overview/",
+            "why": "Metrics and alerting"
+          },
+          {
+            "category": "Observability",
+            "title": "Grafana docs",
+            "url": "https://grafana.com/docs/grafana/latest/",
+            "why": "Dashboards and alerting"
+          },
+          {
+            "category": "Architecture",
+            "title": "System Design Primer",
+            "url": "https://github.com/donnemartin/system-design-primer",
+            "why": "Free architecture interview preparation"
+          },
+          {
+            "category": "Architecture",
+            "title": "roadmap.sh backend",
+            "url": "https://roadmap.sh/backend",
+            "why": "Visual skills map"
+          },
+          {
+            "category": "Architecture",
+            "title": "Microsoft system design patterns",
+            "url": "https://learn.microsoft.com/en-us/azure/architecture/patterns/",
+            "why": "Reliability and distributed patterns"
+          },
+          {
+            "category": "Security",
+            "title": "OWASP API Security Top 10",
+            "url": "https://owasp.org/API-Security/",
+            "why": "API-specific threat modeling"
+          },
+          {
+            "category": "Practice",
+            "title": "Exercism Java track",
+            "url": "https://exercism.org/tracks/java",
+            "why": "Community practice and mentoring"
+          },
+          {
+            "category": "Practice",
+            "title": "NeetCode practice roadmap",
+            "url": "https://neetcode.io/roadmap",
+            "why": "DSA patterns; some content paid"
+          },
+          {
+            "category": "Practice",
+            "title": "GitHub Skills",
+            "url": "https://skills.github.com/",
+            "why": "GitHub workflows and version control"
+          },
+          {
+            "category": "AI fundamentals",
+            "title": "Hugging Face LLM Course",
+            "url": "https://huggingface.co/learn/llm-course/chapter1/1",
+            "why": "Free foundational course; focus on tokens, transformers and embeddings."
+          },
+          {
+            "category": "AI fundamentals",
+            "title": "Hugging Face Open-Source AI Cookbook",
+            "url": "https://huggingface.co/learn/cookbook/index",
+            "why": "Free worked examples; some notebooks require compute."
+          },
+          {
+            "category": "Spring AI",
+            "title": "Spring AI project & compatibility",
+            "url": "https://spring.io/projects/spring-ai",
+            "why": "Start here to choose a compatible Spring Boot and Spring AI release train; do not blindly use latest major."
+          },
+          {
+            "category": "Spring AI",
+            "title": "Spring AI reference",
+            "url": "https://docs.spring.io/spring-ai/reference/index.html",
+            "why": "Official model adapters, ChatClient, memory, evaluation and tools; choose your installed version."
+          },
+          {
+            "category": "Spring AI",
+            "title": "ChatClient API",
+            "url": "https://docs.spring.io/spring-ai/reference/api/chatclient.html",
+            "why": "Fluent model API, prompts and response handling."
+          },
+          {
+            "category": "RAG & vectors",
+            "title": "Spring AI RAG reference",
+            "url": "https://docs.spring.io/spring-ai/reference/api/retrieval-augmented-generation.html",
+            "why": "Retrieval patterns and advisors."
+          },
+          {
+            "category": "RAG & vectors",
+            "title": "pgvector",
+            "url": "https://github.com/pgvector/pgvector",
+            "why": "Free PostgreSQL vector extension; exact/approximate search and indexing."
+          },
+          {
+            "category": "AI fundamentals",
+            "title": "Ollama API",
+            "url": "https://docs.ollama.com/api",
+            "why": "Local inference APIs; model download, hardware and license requirements vary."
+          },
+          {
+            "category": "AI fundamentals",
+            "title": "Ollama FAQ",
+            "url": "https://github.com/ollama/ollama/blob/main/docs/faq.mdx",
+            "why": "Local server setup, origin configuration and privacy options."
+          },
+          {
+            "category": "AI security",
+            "title": "OWASP GenAI Security Project — 2026 Top 10",
+            "url": "https://genai.owasp.org/top-10-for-llm-applications-2026/",
+            "why": "Prioritize injection, data disclosure, excessive agency and output handling."
+          },
+          {
+            "category": "Tools & agents",
+            "title": "MCP Java SDK",
+            "url": "https://java.sdk.modelcontextprotocol.io/",
+            "why": "Implement interoperable Java tools; use version-matched docs."
+          },
+          {
+            "category": "Tools & agents",
+            "title": "Spring AI tool calling",
+            "url": "https://docs.spring.io/spring-ai/reference/api/tools.html",
+            "why": "Understand tool schema, dispatch and control loop."
+          },
+          {
+            "category": "Tools & agents",
+            "title": "Hugging Face Agents Course",
+            "url": "https://huggingface.co/learn/agents-course",
+            "why": "Free course material; adapt concepts to Java and bounded agents."
+          },
+          {
+            "category": "AI evals",
+            "title": "OpenAI evaluation learning resources",
+            "url": "https://developers.openai.com/learn/evals",
+            "why": "Free guidance and examples; hosted API execution can incur charges."
+          },
+          {
+            "category": "AI evals",
+            "title": "Evaluation best practices",
+            "url": "https://developers.openai.com/api/docs/guides/evaluation-best-practices",
+            "why": "Design task-specific datasets and graders; apply with local models too."
+          },
+          {
+            "category": "Spring AI",
+            "title": "Structured outputs guide",
+            "url": "https://developers.openai.com/api/docs/guides/structured-outputs",
+            "why": "Learn schema-constrained output and refusal handling; hosted calls may cost money."
+          },
+          {
+            "category": "AI reliability",
+            "title": "OpenTelemetry GenAI semantic conventions",
+            "url": "https://github.com/open-telemetry/semantic-conventions-genai",
+            "why": "Trace model/retrieval operations; conventions evolve, avoid payload logging."
+          },
+          {
+            "category": "AI reliability",
+            "title": "OpenAI scaling learning resources",
+            "url": "https://developers.openai.com/learn/scaling",
+            "why": "Free guidance on latency, cost, rate limits and production reliability; hosted use may cost money."
+          }
+        ],
+        "quiz": [
+          {
+            "category": "Java",
+            "q": "Which is required by the equals/hashCode contract?",
+            "options": [
+              "Equal objects must have equal hash codes",
+              "Different objects must have different hash codes",
+              "hashCode must be stable across JVM runs",
+              "equals must compare object identities"
+            ],
+            "answer": 0,
+            "explanation": "A hash collision is allowed; equality implies identical hash codes."
+          },
+          {
+            "category": "Java",
+            "q": "What does volatile alone guarantee for a shared int counter?",
+            "options": [
+              "Atomic increments",
+              "Visibility, not atomic increments",
+              "Mutual exclusion",
+              "Deadlock prevention"
+            ],
+            "answer": 1,
+            "explanation": "counter++ consists of multiple operations."
+          },
+          {
+            "category": "SQL",
+            "q": "What typically happens under PostgreSQL READ COMMITTED?",
+            "options": [
+              "All statements share one snapshot",
+              "Each statement sees a fresh snapshot of committed data",
+              "Dirty reads are allowed",
+              "Serializable ordering is guaranteed"
+            ],
+            "answer": 1,
+            "explanation": "Each statement begins with a new committed-data snapshot."
+          },
+          {
+            "category": "SQL",
+            "q": "Why use EXPLAIN (ANALYZE, BUFFERS)?",
+            "options": [
+              "To create indexes",
+              "To execute and inspect actual plan and I/O",
+              "To lock all rows permanently",
+              "To encrypt result rows"
+            ],
+            "answer": 1,
+            "explanation": "It measures an executed plan; be mindful of modifying queries."
+          },
+          {
+            "category": "Spring",
+            "q": "Why can @Transactional fail on a method called by another method in the same bean?",
+            "options": [
+              "SQL is disabled",
+              "Self-invocation bypasses the Spring proxy",
+              "JPA ignores all annotations",
+              "Only public classes support SQL"
+            ],
+            "answer": 1,
+            "explanation": "Proxy interception is skipped when calling this.method directly."
+          },
+          {
+            "category": "Spring",
+            "q": "Which HTTP response is usually appropriate for a conflicting resource state?",
+            "options": ["200", "201", "409", "503"],
+            "answer": 2,
+            "explanation": "409 Conflict signals that the request cannot complete because of resource state."
+          },
+          {
+            "category": "Security",
+            "q": "What should be checked for every tenant-scoped resource request?",
+            "options": [
+              "Only a valid JWT",
+              "Object-level authorization and tenant ownership",
+              "Only TLS availability",
+              "Only the request content type"
+            ],
+            "answer": 1,
+            "explanation": "Authenticated does not imply authorized to access every object."
+          },
+          {
+            "category": "Testing",
+            "q": "Why use Testcontainers for PostgreSQL integration tests?",
+            "options": [
+              "It replaces all unit tests",
+              "It tests against real PostgreSQL semantics",
+              "It guarantees zero flaky tests",
+              "It removes all deployment needs"
+            ],
+            "answer": 1,
+            "explanation": "Tests execute against a real ephemeral DB instead of H2 substitutions."
+          },
+          {
+            "category": "Ledger",
+            "q": "For a journal posting two entries, what invariant must hold?",
+            "options": [
+              "Every entry must be positive",
+              "Debits and credits sum to zero",
+              "Only one account changes",
+              "A cache stores canonical balance"
+            ],
+            "answer": 1,
+            "explanation": "Double-entry requires balanced postings."
+          },
+          {
+            "category": "Ledger",
+            "q": "Where is the authoritative protection against duplicate money movement?",
+            "options": [
+              "Browser localStorage",
+              "Application memory",
+              "Database unique constraint + transactional idempotency record",
+              "Rate limit only"
+            ],
+            "answer": 2,
+            "explanation": "Redis may improve speed but cannot be sole durable source of truth."
+          },
+          {
+            "category": "Ledger",
+            "q": "Why order locks consistently across accounts?",
+            "options": [
+              "Make transactions faster in all cases",
+              "Reduce deadlock cycles",
+              "Disable isolation",
+              "Eliminate every possible timeout"
+            ],
+            "answer": 1,
+            "explanation": "Uniform lock order reduces cyclical waits."
+          },
+          {
+            "category": "Redis",
+            "q": "What can cache-aside provide for money balances?",
+            "options": [
+              "Guaranteed correctness of a transfer",
+              "Faster non-authoritative reads with invalidation policy",
+              "Atomic double-entry ledger",
+              "Exactly-once Kafka events"
+            ],
+            "answer": 1,
+            "explanation": "Canonical transfer validation must consult the authoritative database."
+          },
+          {
+            "category": "Kafka",
+            "q": "What does an outbox pattern primarily prevent?",
+            "options": [
+              "All event duplication",
+              "Lost events from a DB-commit/publish crash gap",
+              "All consumer lag",
+              "All database contention"
+            ],
+            "answer": 1,
+            "explanation": "Transactional write persists both business state and an event intent."
+          },
+          {
+            "category": "Kafka",
+            "q": "What must an at-least-once consumer tolerate?",
+            "options": [
+              "No duplicate messages",
+              "Duplicate delivery and replay",
+              "Only one partition",
+              "No failures"
+            ],
+            "answer": 1,
+            "explanation": "Idempotent side effects and durable deduplication are needed."
+          },
+          {
+            "category": "Observability",
+            "q": "What does p99 latency represent?",
+            "options": [
+              "Average request duration",
+              "99th percentile of observed durations",
+              "Maximum possible latency",
+              "99 requests per second"
+            ],
+            "answer": 1,
+            "explanation": "About 99% of observed requests are at or below the p99 value."
+          },
+          {
+            "category": "Debugging",
+            "q": "Best first artifact to inspect Java thread deadlock?",
+            "options": [
+              "Thread dump",
+              "HTML screenshot",
+              "Schema migration",
+              "CSS source map"
+            ],
+            "answer": 0,
+            "explanation": "Thread dumps show BLOCKED threads, monitors and lock ownership."
+          },
+          {
+            "category": "Testing",
+            "q": "An outage test disables Kafka after DB commit. Expected result?",
+            "options": [
+              "Reverse committed ledger transfer",
+              "Lose event",
+              "Persist outbox entry and publish on recovery",
+              "Return success without storing anything"
+            ],
+            "answer": 2,
+            "explanation": "The outbox should be drained after broker recovery."
+          },
+          {
+            "category": "Security",
+            "q": "What is appropriate for storing application secrets?",
+            "options": [
+              "Commit into Git",
+              "Embed in JS bundle",
+              "Environment/secret manager with access controls",
+              "Put them in API responses"
+            ],
+            "answer": 2,
+            "explanation": "Keep secrets outside source control and rotate compromised keys."
+          },
+          {
+            "category": "Architecture",
+            "q": "When should you add microservices?",
+            "options": [
+              "Before a working monolith exists",
+              "When measurable team/domain/scaling needs justify complexity",
+              "Whenever Redis is installed",
+              "For every CRUD entity"
+            ],
+            "answer": 1,
+            "explanation": "A modular monolith is often the best starting point."
+          },
+          {
+            "category": "Production",
+            "q": "Which benchmark claim is defensible on a resume?",
+            "options": [
+              "A hoped-for target",
+              "A reproduced measurement with configuration, method and constraints",
+              "Competitor benchmark",
+              "Any synthetic number"
+            ],
+            "answer": 1,
+            "explanation": "Publish workload, environment, time period and measurement evidence."
+          },
+          {
+            "category": "AI fundamentals",
+            "q": "Why is a model response not a source of truth for a wallet balance?",
+            "options": [
+              "Because SQL cannot be used with AI.",
+              "Because LLMs never return numbers.",
+              "Because JSON guarantees correctness.",
+              "The model predicts text, while the database owns the balance invariant."
+            ],
+            "answer": 3,
+            "explanation": "Use deterministic ledger queries; model text is presentation only."
+          },
+          {
+            "category": "AI fundamentals",
+            "q": "What does a context window limit?",
+            "options": [
+              "The size of a Redis cluster.",
+              "The number of Spring beans.",
+              "The amount of tokens a model can process in a request, subject to model-specific limits.",
+              "The number of users registered in PostgreSQL."
+            ],
+            "answer": 2,
+            "explanation": "Budget context and output; long prompts can truncate or increase latency."
+          },
+          {
+            "category": "AI fundamentals",
+            "q": "What is true of temperature zero?",
+            "options": [
+              "It guarantees factual output.",
+              "It makes the model free.",
+              "It prevents prompt injection.",
+              "It can reduce sampling variability but does not guarantee correct or reproducible answers."
+            ],
+            "answer": 3,
+            "explanation": "Even low-temperature responses need validation and evals."
+          },
+          {
+            "category": "AI fundamentals",
+            "q": "What is an embedding?",
+            "options": [
+              "An encrypted database password.",
+              "A guarantee of factual truth.",
+              "A numeric representation used for similarity comparisons.",
+              "A Kafka offset."
+            ],
+            "answer": 2,
+            "explanation": "Embedding similarity helps retrieval, but is not proof of correctness."
+          },
+          {
+            "category": "AI fundamentals",
+            "q": "When should you prefer RAG to fine-tuning for changing FAQs?",
+            "options": [
+              "When you need to change CPU architecture.",
+              "When retrieval is forbidden by design.",
+              "When every answer must be a database write.",
+              "When you need current, source-grounded information that can be updated independently."
+            ],
+            "answer": 3,
+            "explanation": "Retrieve and cite versioned documents; fine-tuning is not a reliable knowledge refresh."
+          },
+          {
+            "category": "AI fundamentals",
+            "q": "What is context engineering?",
+            "options": [
+              "Maximizing prompt length regardless of relevance.",
+              "Using only a larger model.",
+              "Replacing access control with prompts.",
+              "Selecting and structuring the relevant instructions, data and tools for a model task."
+            ],
+            "answer": 3,
+            "explanation": "Relevant bounded context improves task execution while preserving trust boundaries."
+          },
+          {
+            "category": "Spring AI",
+            "q": "Why use a ModelGateway abstraction?",
+            "options": [
+              "To remove the need for HTTP timeouts.",
+              "To ensure all providers have identical output quality.",
+              "To isolate provider specifics and enable deterministic fakes in tests.",
+              "To let the model control money transactions."
+            ],
+            "answer": 2,
+            "explanation": "A replaceable adapter supports testing and provider changes."
+          },
+          {
+            "category": "Spring AI",
+            "q": "What must happen after structured JSON output is parsed?",
+            "options": [
+              "Immediately execute every field as SQL.",
+              "Disable error handling.",
+              "Validate domain constraints and authorization before use.",
+              "Assume the content is accurate."
+            ],
+            "answer": 2,
+            "explanation": "Schema compliance does not prove semantic correctness or permission."
+          },
+          {
+            "category": "Spring AI",
+            "q": "What is an appropriate response to a model refusal?",
+            "options": [
+              "Handle it as an explicit outcome with safe fallback or clear error.",
+              "Convert it to a successful transfer.",
+              "Retry forever with more aggressive prompts.",
+              "Disable all API security."
+            ],
+            "answer": 0,
+            "explanation": "Model refusal is a normal failure mode in an API contract."
+          },
+          {
+            "category": "Spring AI",
+            "q": "Why version prompts alongside code?",
+            "options": [
+              "To eliminate provider costs.",
+              "To automatically improve retrieval recall.",
+              "To reproduce and evaluate changes and roll back behavior.",
+              "To hide bugs from tests."
+            ],
+            "answer": 2,
+            "explanation": "A prompt is part of the application behavior and release configuration."
+          },
+          {
+            "category": "RAG & vectors",
+            "q": "Where must tenant filtering be enforced?",
+            "options": [
+              "Only after displaying the response.",
+              "Only in a system prompt.",
+              "Only in the frontend.",
+              "In trusted retrieval/data-access code before returning context to the model."
+            ],
+            "answer": 3,
+            "explanation": "The model must never see data the caller is not authorized to access."
+          },
+          {
+            "category": "RAG & vectors",
+            "q": "What does recall@k measure?",
+            "options": [
+              "The fraction of generated tokens with punctuation.",
+              "The percentage of Java code compiled.",
+              "The fraction of total requests billed.",
+              "The fraction of relevant reference documents retrieved within the top k."
+            ],
+            "answer": 3,
+            "explanation": "Recall measures retrieval coverage, not necessarily answer accuracy."
+          },
+          {
+            "category": "RAG & vectors",
+            "q": "What is a trade-off of approximate nearest-neighbor indexing?",
+            "options": [
+              "Every vector becomes encrypted.",
+              "Guaranteed perfect recall.",
+              "Potentially faster retrieval at the expense of missing some nearest neighbors.",
+              "No need for indexes."
+            ],
+            "answer": 2,
+            "explanation": "Compare approximate retrieval with exact search using a representative dataset."
+          },
+          {
+            "category": "RAG & vectors",
+            "q": "What should happen if no trustworthy source supports an answer?",
+            "options": [
+              "Query a foreign tenant.",
+              "Increase temperature until a claim appears.",
+              "Invent a plausible citation.",
+              "Abstain or clearly report insufficient evidence."
+            ],
+            "answer": 3,
+            "explanation": "Grounded systems should handle unknown questions explicitly."
+          },
+          {
+            "category": "RAG & vectors",
+            "q": "Why store an embedding model version?",
+            "options": [
+              "Vector spaces may differ; migrations and reindexing need compatibility tracking.",
+              "All embeddings have identical semantics.",
+              "To avoid testing queries.",
+              "To bypass authorization."
+            ],
+            "answer": 0,
+            "explanation": "Do not mix incompatible embedding spaces just because dimensions match."
+          },
+          {
+            "category": "RAG & vectors",
+            "q": "Which experiment best compares chunking strategies?",
+            "options": [
+              "Only count lines of source code.",
+              "Run both on the same frozen labeled queries and compare recall, quality and latency.",
+              "Compare two unrelated query sets.",
+              "Choose the longest chunks by intuition."
+            ],
+            "answer": 1,
+            "explanation": "Control dataset and measure both retrieval and downstream quality."
+          },
+          {
+            "category": "AI security",
+            "q": "A retrieved document instructs the model to ignore policy. What is this?",
+            "options": [
+              "A database isolation level.",
+              "A valid authorization token.",
+              "A thread deadlock.",
+              "Indirect prompt injection."
+            ],
+            "answer": 3,
+            "explanation": "Retrieved content is untrusted data; enforce permissions outside the model."
+          },
+          {
+            "category": "AI security",
+            "q": "What is the safest role for AI in the wallet capstone?",
+            "options": [
+              "Deciding whether a transfer is authorized.",
+              "Changing balances without checks.",
+              "Read-only explanation of verified ledger facts and public help.",
+              "Writing arbitrary SQL generated by the model."
+            ],
+            "answer": 2,
+            "explanation": "Money movement stays in deterministic transactional code."
+          },
+          {
+            "category": "AI security",
+            "q": "Where should provider API secrets live?",
+            "options": [
+              "In an HTML localStorage setting.",
+              "In the user's prompt.",
+              "In a public GitHub README.",
+              "On a secured backend or secret manager, never in distributed browser code."
+            ],
+            "answer": 3,
+            "explanation": "Client-delivered secrets are accessible to users and scripts."
+          },
+          {
+            "category": "AI security",
+            "q": "What prevents a malicious tool request from reading another tenant?",
+            "options": [
+              "Server-side authenticated identity and authorization checks on every call.",
+              "An instruction saying do not read other tenants.",
+              "A high similarity score.",
+              "An agent's confidence score."
+            ],
+            "answer": 0,
+            "explanation": "Treat model-generated tool calls as untrusted input."
+          },
+          {
+            "category": "AI security",
+            "q": "Why redact raw prompts and responses in telemetry?",
+            "options": [
+              "They may contain credentials, personal information or proprietary data.",
+              "To eliminate all security risk.",
+              "Because tracing cannot store strings.",
+              "To make all requests faster."
+            ],
+            "answer": 0,
+            "explanation": "Prefer metadata and explicit safe sampling; avoid sensitive payload collection."
+          },
+          {
+            "category": "AI security",
+            "q": "What should an agent have before calling a write-capable tool?",
+            "options": [
+              "Explicit authorization, appropriate approval, validated parameters and bounded execution.",
+              "An unlimited retry loop.",
+              "An arbitrary shell command.",
+              "Only a successful language model response."
+            ],
+            "answer": 0,
+            "explanation": "Approval and application policy must constrain impact; the learning wallet has no write tools."
+          },
+          {
+            "category": "AI reliability",
+            "q": "What is a sensible retry strategy for provider 429 or transient 5xx?",
+            "options": [
+              "Retry every millisecond forever.",
+              "Always return HTTP 200.",
+              "Retry invalid requests indefinitely.",
+              "Bound retries with backoff, jitter and a deadline; respect provider guidance."
+            ],
+            "answer": 3,
+            "explanation": "Avoid amplifying provider outages and respect total request budget."
+          },
+          {
+            "category": "AI reliability",
+            "q": "Why use a fake model in normal CI?",
+            "options": [
+              "To replace all integration tests.",
+              "To remove the need for evals.",
+              "To make contract and failure-path tests repeatable without a network dependency.",
+              "To prove the real model is factually correct."
+            ],
+            "answer": 2,
+            "explanation": "Test actual inference separately; fakes test your deterministic code."
+          },
+          {
+            "category": "AI reliability",
+            "q": "Which metric is useful for streaming UX?",
+            "options": [
+              "Only database disk capacity.",
+              "Time to first token plus total response time.",
+              "Only the number of tables.",
+              "Only total Git commits."
+            ],
+            "answer": 1,
+            "explanation": "Streaming responsiveness differs from complete-response latency."
+          },
+          {
+            "category": "AI reliability",
+            "q": "What must happen to the core ledger if the inference provider is down?",
+            "options": [
+              "All transfers stop by design.",
+              "The application silently invents responses.",
+              "It remains available and correct; the optional AI feature degrades.",
+              "The model estimates balances from memory."
+            ],
+            "answer": 2,
+            "explanation": "Keep AI outside the critical transaction path."
+          },
+          {
+            "category": "AI reliability",
+            "q": "Why cap concurrent model requests?",
+            "options": [
+              "To eliminate authorization checks.",
+              "To make tokens unlimited.",
+              "To guarantee better semantic quality.",
+              "To limit resource exhaustion and protect ordinary API traffic."
+            ],
+            "answer": 3,
+            "explanation": "Use bounded queues, deadlines and per-tenant quotas."
+          },
+          {
+            "category": "AI evals",
+            "q": "What is a useful evaluation split?",
+            "options": [
+              "Tune and report only on identical examples.",
+              "Use only one happy-path query.",
+              "Development fixtures for tuning and a held-out set for final measurement.",
+              "Exclude all difficult cases."
+            ],
+            "answer": 2,
+            "explanation": "Held-out examples reduce overfitting; include adversarial and unknown cases."
+          },
+          {
+            "category": "AI evals",
+            "q": "Why use a groundedness rubric in addition to retrieval recall?",
+            "options": [
+              "All correct answers have the same token count.",
+              "Recall alone measures every answer claim.",
+              "Retrieving the right document does not guarantee the answer faithfully uses it.",
+              "Groundedness eliminates authorization needs."
+            ],
+            "answer": 2,
+            "explanation": "Evaluate retrieval and generation separately; inspect citations and claims."
+          },
+          {
+            "category": "AI evals",
+            "q": "Which is the best proof of improvement?",
+            "options": [
+              "A reproducible before/after eval on the same dataset and configuration log.",
+              "A model's self-reported confidence.",
+              "A single cherry-picked demo.",
+              "A larger number of prompts."
+            ],
+            "answer": 0,
+            "explanation": "Measure failures, quality, latency and cost under comparable conditions."
+          },
+          {
+            "category": "AI evals",
+            "q": "Why include unanswerable and adversarial queries?",
+            "options": [
+              "To guarantee all queries have answers.",
+              "To test abstention, permission boundaries and robustness.",
+              "To increase token use.",
+              "To improve the model by hiding bad cases."
+            ],
+            "answer": 1,
+            "explanation": "A production assistant must know when not to answer or act."
+          },
+          {
+            "category": "AI evals",
+            "q": "What is a limitation of an LLM-as-judge?",
+            "options": [
+              "It may be biased or inconsistent; calibrate it against human-labeled examples.",
+              "It guarantees zero hallucinations.",
+              "It makes deterministic tests obsolete.",
+              "It is always more accurate than humans."
+            ],
+            "answer": 0,
+            "explanation": "Use clear rubrics, calibration and review of disputed cases."
+          },
+          {
+            "category": "Tools & agents",
+            "q": "What does tool calling actually provide?",
+            "options": [
+              "A model can propose a structured invocation; application code decides whether to execute it.",
+              "Automatic authority to perform any action.",
+              "A guarantee that parameters are safe.",
+              "A replacement for an API gateway."
+            ],
+            "answer": 0,
+            "explanation": "Validate and authorize each call in trusted code."
+          },
+          {
+            "category": "Tools & agents",
+            "q": "What is MCP useful for?",
+            "options": [
+              "Replacing SQL transactions.",
+              "Automatically making all tools public.",
+              "A standardized way for AI applications to discover and interact with tools and data.",
+              "Guaranteeing model truthfulness."
+            ],
+            "answer": 2,
+            "explanation": "MCP is a protocol, not an authorization policy."
+          },
+          {
+            "category": "Tools & agents",
+            "q": "What stops a looping agent consuming resources?",
+            "options": [
+              "Allowing infinite tool calls.",
+              "Increasing temperature.",
+              "A step cap, deadline and explicit stop/failure policy.",
+              "Removing observability."
+            ],
+            "answer": 2,
+            "explanation": "Bound cost and runtime; log the stopping reason."
+          },
+          {
+            "category": "AI-assisted engineering",
+            "q": "What is the best use of AI-generated code?",
+            "options": [
+              "Merge without reading it.",
+              "Give AI unrestricted production credentials.",
+              "Treat generated tests as proof of all correctness.",
+              "Review the diff, compile, test, inspect dependencies and verify behavior yourself."
+            ],
+            "answer": 3,
+            "explanation": "The engineer owns correctness, security and maintainability."
+          },
+          {
+            "category": "AI-assisted engineering",
+            "q": "How should AI help with debugging?",
+            "options": [
+              "Declare root cause before reading logs.",
+              "Propose falsifiable hypotheses based on sanitized evidence, then verify experimentally.",
+              "Remove error handling to simplify code.",
+              "Make many uncontrolled changes at once."
+            ],
+            "answer": 1,
+            "explanation": "Measure before changing; isolate causes and add regressions."
+          },
+          {
+            "category": "AI-assisted engineering",
+            "q": "What should you do when AI invents a library method?",
+            "options": [
+              "Check versioned official documentation and compilation results.",
+              "Ignore the failing build.",
+              "Change the compiler to accept it.",
+              "Add a fake method without understanding it."
+            ],
+            "answer": 0,
+            "explanation": "Verify dependency compatibility and API existence."
+          },
+          {
+            "category": "AI-assisted engineering",
+            "q": "How should you prepare for interviews using AI?",
+            "options": [
+              "Memorize generated answers without understanding.",
+              "Attempt independently, receive critique, then explain and retest unaided.",
+              "Skip practical exercises.",
+              "Ask AI to impersonate you in an interview."
+            ],
+            "answer": 1,
+            "explanation": "AI is a tutor, not a substitute for demonstrable skills."
+          },
+          {
+            "category": "AI-assisted engineering",
+            "q": "How should AI-produced test cases be reviewed?",
+            "options": [
+              "Delete all existing tests.",
+              "Assume passing generated tests imply correctness.",
+              "Only count coverage percentage.",
+              "Check assertions, edge cases and whether tests fail on a real bug."
+            ],
+            "answer": 3,
+            "explanation": "Mutation or negative tests help establish that assertions are meaningful."
+          }
+        ],
+        "challenges": [
+          {
+            "type": "Coding",
+            "title": "Atomic wallet transfer",
+            "prompt": "Implement POST /transfers using BigDecimal, a transaction, ordered locks, 2 ledger entries, and insufficient-funds checks.",
+            "acceptance": "Two simultaneous transfers never overspend; journal balances; retries do not duplicate.",
+            "tag": "Ledger"
+          },
+          {
+            "type": "Coding",
+            "title": "Bounded blocking queue",
+            "prompt": "Implement a generic capacity-N queue using ReentrantLock + Condition or wait/notify.",
+            "acceptance": "Blocking put/take, no lost signals, interrupt handling, shutdown policy.",
+            "tag": "Java"
+          },
+          {
+            "type": "Coding",
+            "title": "Thread-safe LRU",
+            "prompt": "Implement O(1) get/put LRU cache with HashMap + doubly linked list, then synchronize correctly.",
+            "acceptance": "Capacity 0/1, overwrite, eviction order, 20-thread contention tests.",
+            "tag": "Java"
+          },
+          {
+            "type": "Coding",
+            "title": "SQL window reports",
+            "prompt": "Write per-account running balance and top-3 transactions per tenant using window functions.",
+            "acceptance": "Result matches fixture including ties and empty accounts.",
+            "tag": "SQL"
+          },
+          {
+            "type": "Debugging",
+            "title": "Find N+1",
+            "prompt": "One API endpoint lists 100 orders and performs 101 SQL queries. Diagnose and fix.",
+            "acceptance": "Capture query count, compare before/after, avoid unintended cartesian explosion.",
+            "tag": "Spring"
+          },
+          {
+            "type": "Debugging",
+            "title": "Deadlock reproduction",
+            "prompt": "Two transfers lock account A/B in opposite order. Capture Java thread dump and DB locks.",
+            "acceptance": "Reproduce the failure; impose deterministic ordering and rerun test.",
+            "tag": "Ledger"
+          },
+          {
+            "type": "Debugging",
+            "title": "Connection pool exhaustion",
+            "prompt": "Requests hang under load with Hikari active=max. Isolate slow queries, leaks, or pool sizing.",
+            "acceptance": "Attach pool metrics, evidence, root cause, and bounded remediation.",
+            "tag": "Production"
+          },
+          {
+            "type": "Debugging",
+            "title": "Memory growth",
+            "prompt": "A request cache keeps references forever. Reproduce heap growth and inspect a dump.",
+            "acceptance": "Document retaining path, fix eviction, compare memory usage.",
+            "tag": "Production"
+          },
+          {
+            "type": "Testing",
+            "title": "Unit transfer rules",
+            "prompt": "Test insufficient funds, self-transfer, invalid amounts and immutable ledger entries.",
+            "acceptance": "All tests deterministic and fast.",
+            "tag": "Ledger"
+          },
+          {
+            "type": "Testing",
+            "title": "Integration + Testcontainers",
+            "prompt": "Start PostgreSQL container; apply migrations and verify transaction rollback on partial failure.",
+            "acceptance": "Rollback leaves zero partial ledger entries.",
+            "tag": "SQL"
+          },
+          {
+            "type": "Testing",
+            "title": "Concurrency contention",
+            "prompt": "Fire 500 simultaneous transfer attempts from one bounded-balance wallet.",
+            "acceptance": "No negative balances or double spending; record success/failure counts.",
+            "tag": "Ledger"
+          },
+          {
+            "type": "Testing",
+            "title": "Idempotency replay",
+            "prompt": "Replay same key and payload 50 times; then same key with altered payload.",
+            "acceptance": "Same final transfer result for repeats; altered payload rejected.",
+            "tag": "Ledger"
+          },
+          {
+            "type": "Testing",
+            "title": "Authorization matrix",
+            "prompt": "Verify anonymous, user, admin and foreign-tenant access to every endpoint.",
+            "acceptance": "No cross-tenant reads or writes, including guessed IDs.",
+            "tag": "Security"
+          },
+          {
+            "type": "Testing",
+            "title": "Outbox recovery",
+            "prompt": "Commit transfers while Kafka is down and then restore it.",
+            "acceptance": "No missing business events; consumer side effects deduplicated.",
+            "tag": "Kafka"
+          },
+          {
+            "type": "Testing",
+            "title": "k6 performance baseline",
+            "prompt": "Measure 1, 10, 50 and 100 virtual-user profiles with realistic payloads.",
+            "acceptance": "Save p50/p95/p99/errors/RPS plus machine specs.",
+            "tag": "Production"
+          },
+          {
+            "type": "Design",
+            "title": "System design critique",
+            "prompt": "Design notification delivery; compare polling, queues and streaming.",
+            "acceptance": "Provide SLO, capacity math, failure modes and consistency tradeoffs.",
+            "tag": "Architecture"
+          },
+          {
+            "type": "Coding",
+            "title": "Provider adapter",
+            "prompt": "Implement ModelGateway with Spring AI ChatClient or a direct HTTP adapter; fake it in unit tests.",
+            "acceptance": "Success, refusal, timeout and invalid response map to typed outcomes; no secrets in source.",
+            "tag": "AI foundations"
+          },
+          {
+            "type": "Coding",
+            "title": "Prompt version registry",
+            "prompt": "Build two prompt variants with typed inputs and a version identifier; commit fixtures.",
+            "acceptance": "Version appears in evaluation metadata; untrusted document text remains data.",
+            "tag": "AI foundations"
+          },
+          {
+            "type": "Coding",
+            "title": "Structured explanation API",
+            "prompt": "Build a read-only transaction explanation endpoint using verified SQL facts and validated JSON output.",
+            "acceptance": "Invalid numbers or IDs are rejected; fallback is deterministic.",
+            "tag": "Spring AI"
+          },
+          {
+            "type": "Coding",
+            "title": "Synthetic document ingester",
+            "prompt": "Chunk and hash public FAQs; store tenant, document ID, version and embedding metadata.",
+            "acceptance": "Repeated ingestion has no duplicates; update/delete removes stale results.",
+            "tag": "RAG & vectors"
+          },
+          {
+            "type": "Coding",
+            "title": "Vector search and lexical baseline",
+            "prompt": "Implement pgvector similarity search and basic keyword search; compare on labeled queries.",
+            "acceptance": "Correct tenant filter, recall@k and latency report; benchmark exact before approximate.",
+            "tag": "RAG & vectors"
+          },
+          {
+            "type": "Coding",
+            "title": "Grounded RAG service",
+            "prompt": "Build help endpoint retrieving allowed docs with citations and abstention.",
+            "acceptance": "Only retrieved authorized document IDs can be cited; unknown questions are handled.",
+            "tag": "RAG & vectors"
+          },
+          {
+            "type": "Coding",
+            "title": "Read-only tool dispatcher",
+            "prompt": "Expose getTransactionStatus and searchHelp with strict typed input and authenticated caller.",
+            "acceptance": "Unknown tools and foreign IDs denied; no write tools registered.",
+            "tag": "Tools & agents"
+          },
+          {
+            "type": "Coding",
+            "title": "MCP read-only service",
+            "prompt": "Expose synthetic FAQ lookup using compatible Java MCP SDK/Spring AI version.",
+            "acceptance": "Tool schema visible in local inspector; auth and bounded parameters enforced.",
+            "tag": "Tools & agents"
+          },
+          {
+            "type": "Coding",
+            "title": "Streaming or async inference",
+            "prompt": "Implement SSE or an async job endpoint with cancellation and bounded executor.",
+            "acceptance": "Disconnect releases work where supported; timeout and capacity limits tested.",
+            "tag": "AI reliability"
+          },
+          {
+            "type": "Debugging",
+            "title": "Hallucinated library method",
+            "prompt": "Ask AI for Java client code, compile it, check versioned docs and repair incompatible APIs.",
+            "acceptance": "Reproducible failure and fixed compilation; note rejected suggestion.",
+            "tag": "AI-assisted engineering"
+          },
+          {
+            "type": "Debugging",
+            "title": "Incorrect retrieval",
+            "prompt": "Introduce stale document or wrong metadata, then diagnose missing citations.",
+            "acceptance": "Root cause isolated using retrieval trace; regression fixture catches it.",
+            "tag": "RAG & vectors"
+          },
+          {
+            "type": "Debugging",
+            "title": "Malformed response incident",
+            "prompt": "Use a fake model returning truncated JSON, unknown fields and invalid enum.",
+            "acceptance": "Typed failure, no 500 leak, fallback response and regression tests.",
+            "tag": "Spring AI"
+          },
+          {
+            "type": "Debugging",
+            "title": "Slow inference RCA",
+            "prompt": "Add artificial latency and inspect metrics, executor and request traces.",
+            "acceptance": "Identify bottleneck; measure before/after mitigation under same workload.",
+            "tag": "AI reliability"
+          },
+          {
+            "type": "Testing",
+            "title": "Prompt injection regression",
+            "prompt": "Insert hostile instructions into synthetic FAQ text and user messages.",
+            "acceptance": "Application permissions and tool policy remain enforced even if output follows injected text.",
+            "tag": "AI security"
+          },
+          {
+            "type": "Testing",
+            "title": "Cross-tenant RAG and tools",
+            "prompt": "Create two tenant fixtures and query guessed IDs and similar content.",
+            "acceptance": "Zero foreign docs, citations or tool results across negative cases.",
+            "tag": "AI security"
+          },
+          {
+            "type": "Testing",
+            "title": "Model outage and rate limit",
+            "prompt": "Mock timeout, 429 and 503 while exercising core wallet transfers.",
+            "acceptance": "Retries bounded; ledger invariants unchanged; explicit degraded response.",
+            "tag": "AI reliability"
+          },
+          {
+            "type": "Testing",
+            "title": "Frozen evaluation dataset",
+            "prompt": "Build at least 30 labeled examples; score recall@k, supported claims, abstention and latency.",
+            "acceptance": "Versioned dataset and reproducible report including failures, not just happy paths.",
+            "tag": "AI evals"
+          },
+          {
+            "type": "Testing",
+            "title": "AI cost and load baseline",
+            "prompt": "Run bounded load with synthetic inputs; record token counts and p95 latency, or local compute.",
+            "acceptance": "Report model/hardware, error rate, workload and assumptions; no invented costs.",
+            "tag": "AI reliability"
+          },
+          {
+            "type": "Design",
+            "title": "Agent trust boundaries",
+            "prompt": "Draw bounded read-only tool loop with max steps, deadline and explicit approval design for hypothetical writes.",
+            "acceptance": "Threat model demonstrates independent policy checks and stop conditions.",
+            "tag": "Tools & agents"
+          },
+          {
+            "type": "Design",
+            "title": "AI-assisted code review",
+            "prompt": "Write feature before asking AI; review suggestions for API hallucinations and security bugs.",
+            "acceptance": "Evidence log has accepted/rejected changes and failing-then-passing tests.",
+            "tag": "AI-assisted engineering"
+          },
+          {
+            "type": "Design",
+            "title": "Model gateway architecture",
+            "prompt": "Compare local and hosted inference, data classification, fallback, versioning, quotas and observability.",
+            "acceptance": "ADR includes budget, failure modes, privacy and provider compatibility.",
+            "tag": "AI reliability"
+          },
+          {
+            "type": "Testing",
+            "title": "AI release gate",
+            "prompt": "Create deterministic CI with optional separately triggered real-model evals.",
+            "acceptance": "Fail on contract/security regression; report probabilistic quality separately.",
+            "tag": "AI evals"
+          }
+        ]
+      }
+    </script>
+  <script>
+    const DATA = JSON.parse(document.getElementById('payload').textContent)
+    const KEY = 'backend-roadmap-60-v1'
+    let saved = {
+      days: [],
+      labs: [],
+      attempts: [],
+      notes: '',
+      milestones: [],
+      aiDays: []
+    }
+    try {
+      saved = { ...saved, ...JSON.parse(localStorage.getItem(KEY) || '{}') }
+    } catch (e) { }
+    const milestoneLabels = [
+      'GitHub repository with architecture diagram and setup steps',
+      'CI pipeline passes unit + Testcontainers integration tests',
+      'Double-entry posting invariant and retry test evidence',
+      'Tenant isolation/authorization regression matrix',
+      'Reproducible load-test report with p95/p99, errors and hardware',
+      'Outbox crash/restart recovery demonstration',
+      'Incident RCA with heap/thread dump evidence',
+      'Versioned release, sanitized demo and truthful resume bullets',
+      'AI read-only service with versioned prompts and fake-model tests',
+      'Tenant-safe RAG with frozen evaluation dataset and citation checks',
+      'Prompt injection, tool authorization, quota and fallback regression evidence',
+      'AI quality/latency report with real model or explicitly labeled mock'
+    ]
+    const $ = id => document.getElementById(id),
+      esc = s =>
+        String(s).replace(
+          /[&<>"']/g,
+          c =>
+          ({
+            '&': '&amp;',
+            '<': '&lt;',
+            '>': '&gt;',
+            '"': '&quot;',
+            "'": '&#39;'
+          }[c])
+        )
+    function store() {
+      localStorage.setItem(KEY, JSON.stringify(saved))
+    }
+    function toggle(type, index, checked) {
+      const set = new Set(saved[type])
+      if (checked) set.add(index)
+      else set.delete(index)
+      saved[type] = [...set]
+      store()
+      renderAll()
+    }
+    function switchTab(t) {
+      document
+        .querySelectorAll('.page')
+        .forEach(p => p.classList.toggle('active', p.id === t))
+      document
+        .querySelectorAll('[data-tab]')
+        .forEach(b => b.classList.toggle('active', b.dataset.tab === t))
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    }
+    document
+      .querySelectorAll('[data-tab]')
+      .forEach(b => (b.onclick = () => switchTab(b.dataset.tab)))
+    function progress() {
+      const done = saved.days.length,
+        labs = saved.labs.length
+      $('daysCount').textContent = done + '/60'
+      $('labsCount').textContent = labs + '/' + DATA.challenges.length
+      $('mainBar').style.width = (done / 60) * 100 + '%'
+      $('labBar').style.width = (labs / DATA.challenges.length) * 100 + '%'
+      $('nextDay').textContent =
+        DATA.days.find(d => !saved.days.includes(d.day))?.day || '✓'
+      $('quizAttempts').textContent =
+        saved.attempts.length + ' answers submitted'
+      $('quizAccuracy').textContent = saved.attempts.length
+        ? Math.round(
+          (saved.attempts.filter(x => x.correct).length /
+            saved.attempts.length) *
+          100
+        ) + '%'
+        : '—'
+      $('phaseBars').innerHTML = DATA.phases
+        .map(([name, start, end]) => {
+          const count = saved.days.filter(d => d >= start && d <= end).length
+          const pct = (count / (end - start + 1)) * 100
+          return `<div class="phase"><span>${esc(
+            name
+          )}</span><div class="bar"><div style="width:${pct}%"></div></div><strong>${count}/${end - start + 1
+            }</strong></div>`
+        })
+        .join('')
+      $('milestones').innerHTML = milestoneLabels
+        .map(
+          (label, i) =>
+            `<label style="display:flex;align-items:flex-start;gap:10px;margin:8px 0"><input type="checkbox" data-ms="${i}" ${saved.milestones.includes(i) ? 'checked' : ''
+            }>${esc(label)}</label>`
+        )
+        .join('')
+      document
+        .querySelectorAll('[data-ms]')
+        .forEach(
+          x =>
+          (x.onchange = e =>
+            toggle('milestones', +x.dataset.ms, e.target.checked))
+        )
+    }
+    DATA.phases.forEach((p, i) =>
+      $('phaseFilter').insertAdjacentHTML(
+        'beforeend',
+        `<option value="${i}">${esc(p[0])}</option>`
+      )
+    )
+    function renderDays() {
+      let q = $('daySearch').value.toLowerCase(),
+        p = $('phaseFilter').value,
+        s = $('dayFilter').value
+      const rows = DATA.days.filter(
+        d =>
+          (p === 'all' || d.phase == p) &&
+          (s === 'all' || (s === 'done') === saved.days.includes(d.day)) &&
+          [d.title, d.learn, d.deliver, d.aiTitle, d.aiTask, d.day]
+            .join(' ')
+            .toLowerCase()
+            .includes(q)
+      )
+      $('days').innerHTML =
+        rows
+          .map(
+            d =>
+              `<article class="day ${saved.days.includes(d.day) ? 'done' : ''
+              }"><div class="day-head"><div><span class="tag">Day ${d.day
+              } · ${esc(DATA.phases[d.phase][0])}</span><h3>${esc(
+                d.title
+              )}</h3></div><input aria-label="Mark day ${d.day
+              } complete" type="checkbox" data-day="${d.day}" ${saved.days.includes(d.day) ? 'checked' : ''
+              }></div><p>${esc(
+                d.learn
+              )}</p><div class="deliver"><strong>Ship:</strong> ${esc(
+                d.deliver
+              )}</div><details style="margin-top:12px"><summary>AI companion: ${esc(
+                d.aiTitle
+              )}</summary><p>${esc(
+                d.aiTask
+              )}</p><p><strong>Evidence:</strong> ${esc(
+                d.aiProof
+              )}</p><button data-mentor-day="${d.day}">Ask mentor about Day ${d.day
+              }</button></details></article>`
+          )
+          .join('') || '<p>No matching days.</p>'
+      document
+        .querySelectorAll('[data-day]')
+        .forEach(
+          x =>
+          (x.onchange = e =>
+            toggle('days', +x.dataset.day, e.target.checked))
+        )
+      document
+        .querySelectorAll('[data-mentor-day]')
+        .forEach(b => (b.onclick = () => openMentor(+b.dataset.mentorDay)))
+    }
+    ;['daySearch', 'phaseFilter', 'dayFilter'].forEach(
+      x => ($(x).oninput = renderDays)
+    )
+    $('resetFilter').onclick = () => {
+      $('daySearch').value = ''
+      $('phaseFilter').value = 'all'
+      $('dayFilter').value = 'all'
+      renderDays()
+    }
+    let quizOrder = DATA.quiz.map((_, i) => i),
+      quizIndex = 0,
+      answered = {}
+      ;[...new Set(DATA.quiz.map(x => x.category))].forEach(c =>
+        $('quizCategory').add(new Option(c, c))
+      )
+    $('quizCategory').add(new Option('All topics', 'all'), 0)
+    $('quizCategory').value = 'all'
+    function quizFiltered() {
+      const c = $('quizCategory').value
+      return quizOrder.filter(i => c === 'all' || DATA.quiz[i].category === c)
+    }
+    function renderQuiz() {
+      const pool = quizFiltered()
+      quizIndex = Math.min(quizIndex, Math.max(0, pool.length - 1))
+      const ix = pool[quizIndex],
+        q = DATA.quiz[ix]
+      $('quizPos').textContent = quizIndex + 1 + ' / ' + pool.length
+      $('quizTag').textContent = q.category
+      $('question').textContent = q.q
+      const picked = answered[ix]
+      $('answers').innerHTML = q.options
+        .map(
+          (o, j) =>
+            `<button data-answer="${j}" class="${picked === undefined
+              ? ''
+              : j === q.answer
+                ? 'correct'
+                : j === picked
+                  ? 'incorrect'
+                  : ''
+            }" ${picked === undefined ? '' : 'disabled'
+            }>${String.fromCharCode(65 + j)}. ${esc(o)}</button>`
+        )
+        .join('')
+      $('feedback').classList.toggle('hidden', picked === undefined)
+      $('feedback').innerHTML =
+        picked === undefined
+          ? ''
+          : `<strong>${picked === q.answer ? 'Correct' : 'Not quite.'
+          }</strong> ${esc(q.explanation)}`
+      document.querySelectorAll('[data-answer]').forEach(
+        x =>
+        (x.onclick = () => {
+          if (answered[ix] !== undefined) return
+          const choice = +x.dataset.answer
+          answered[ix] = choice
+          saved.attempts.push({
+            question: ix,
+            choice,
+            correct: choice === q.answer,
+            date: new Date().toISOString()
+          })
+          store()
+          renderQuiz()
+          progress()
+          renderAI()
+        })
+      )
+      $('prevQuestion').disabled = quizIndex === 0
+      $('nextQuestion').disabled = quizIndex === pool.length - 1
+    }
+    $('prevQuestion').onclick = () => {
+      quizIndex--
+      renderQuiz()
+    }
+    $('nextQuestion').onclick = () => {
+      quizIndex++
+      renderQuiz()
+    }
+    $('quizCategory').onchange = () => {
+      quizIndex = 0
+      renderQuiz()
+    }
+    $('shuffleQuiz').onclick = () => {
+      quizOrder.sort(() => Math.random() - 0.5)
+      quizIndex = 0
+      answered = {}
+      renderQuiz()
+    }
+    $('resetQuiz').onclick = () => {
+      if (confirm('Reset quiz attempts and current answers?')) {
+        saved.attempts = []
+        answered = {}
+        store()
+        renderAll()
+      }
+    }
+    function renderLabs() {
+      const t = $('labFilter').value,
+        s = $('labStatus').value
+      $('labs').innerHTML =
+        DATA.challenges
+          .map((c, i) => ({ ...c, i }))
+          .filter(
+            c =>
+              (t === 'all' || c.type === t) &&
+              (s === 'all' || (s === 'done') === saved.labs.includes(c.i))
+          )
+          .map(
+            c =>
+              `<article class="day ${saved.labs.includes(c.i) ? 'done' : ''
+              }"><div class="day-head"><span class="tag">${esc(
+                c.type
+              )} · ${esc(
+                c.tag
+              )}</span><input type="checkbox" aria-label="Mark lab ${esc(
+                c.title
+              )} done" data-lab="${c.i}" ${saved.labs.includes(c.i) ? 'checked' : ''
+              }></div><h3>${esc(c.title)}</h3><p>${esc(
+                c.prompt
+              )}</p><details><summary>Acceptance criteria</summary><p>${esc(
+                c.acceptance
+              )}</p></details></article>`
+          )
+          .join('') || '<p>No matching labs.</p>'
+      document
+        .querySelectorAll('[data-lab]')
+        .forEach(
+          x =>
+          (x.onchange = e =>
+            toggle('labs', +x.dataset.lab, e.target.checked))
+        )
+    }
+    ;['labFilter', 'labStatus'].forEach(id => ($(id).onchange = renderLabs))
+      ;[...new Set(DATA.resources.map(r => r.category))].forEach(c =>
+        $('resourceFilter').add(new Option(c, c))
+      )
+    function renderResources() {
+      const cat = $('resourceFilter').value,
+        q = $('resourceSearch').value.toLowerCase()
+      $('resourceList').innerHTML =
+        DATA.resources
+          .filter(
+            r =>
+              (cat === 'all' || r.category === cat) &&
+              [r.category, r.title, r.why].join(' ').toLowerCase().includes(q)
+          )
+          .map(
+            r =>
+              `<article class="day"><span class="tag">${esc(
+                r.category
+              )}</span><h3><a href="${esc(
+                r.url
+              )}" target="_blank" rel="noopener noreferrer">${esc(
+                r.title
+              )} ↗</a></h3><p>${esc(r.why)}</p></article>`
+          )
+          .join('') || '<p>No matching resources.</p>'
+    }
+    ;['resourceFilter', 'resourceSearch'].forEach(
+      id => ($(id).oninput = renderResources)
+    )
+    $('notesText').value = saved.notes
+    $('saveNotes').onclick = () => {
+      saved.notes = $('notesText').value
+      store()
+      alert('Notes saved on this browser')
+    }
+    $('exportData').onclick = () => {
+      saved.notes = $('notesText').value
+      store()
+      const blob = new Blob(
+        [
+          JSON.stringify(
+            {
+              app: 'backend-roadmap-60-v1',
+              exportedAt: new Date().toISOString(),
+              progress: saved
+            },
+            null,
+            2
+          )
+        ],
+        { type: 'application/json' }
+      ),
+        a = document.createElement('a')
+      a.href = URL.createObjectURL(blob)
+      a.download = 'backend-roadmap-progress.json'
+      a.click()
+      setTimeout(() => URL.revokeObjectURL(a.href), 3000)
+    }
+    $('importData').onchange = async e => {
+      const file = e.target.files[0]
+      if (!file) return
+      try {
+        const obj = JSON.parse(await file.text())
+        if (
+          obj.app !== 'backend-roadmap-60-v1' ||
+          !obj.progress ||
+          !Array.isArray(obj.progress.days)
+        )
+          throw Error('Unrecognized backup')
+        if (!confirm('Replace current local progress with this backup?'))
+          return
+        saved = {
+          days: [],
+          labs: [],
+          attempts: [],
+          notes: '',
+          milestones: [],
+          aiDays: [],
+          ...obj.progress
+        }
+        store()
+        $('notesText').value = saved.notes
+        answered = {}
+        renderAll()
+        alert('Backup imported')
+      } catch (e) {
+        alert('Could not import: ' + e.message)
+      }
+      e.target.value = ''
+    }
+    $('clearAll').onclick = () => {
+      if (confirm('Erase ALL local progress and notes?')) {
+        localStorage.removeItem(KEY)
+        saved = {
+          days: [],
+          labs: [],
+          attempts: [],
+          notes: '',
+          milestones: [],
+          aiDays: []
+        }
+        answered = {}
+        $('notesText').value = ''
+        renderAll()
+      }
+    }
+    function renderAll() {
+      progress()
+      renderDays()
+      renderLabs()
+      renderResources()
+      renderQuiz()
+      renderAI()
+    }
+    // AI learning track and mentor: no model requests during page load.
+    DATA.phases.forEach((p, i) =>
+      $('aiPhase').add(new Option(p[0], String(i)))
+    )
+    DATA.days.forEach(d =>
+      $('mentorDay').add(
+        new Option('Day ' + d.day + ' · ' + d.aiTitle, String(d.day))
+      )
+    )
+    function renderAI() {
+      const completed = new Set(saved.aiDays || [])
+      $('aiCount').textContent = completed.size + '/60'
+      $('aiBar').style.width = (completed.size / 60) * 100 + '%'
+      const aiAttempts = saved.attempts.filter(a => a.question >= 20)
+      $('aiQuizStat').textContent = aiAttempts.length
+        ? 'AI quiz: ' +
+        Math.round(
+          (aiAttempts.filter(x => x.correct).length / aiAttempts.length) *
+          100
+        ) +
+        '% across ' +
+        aiAttempts.length +
+        ' attempts'
+        : 'AI quiz: no attempts yet'
+      const q = $('aiSearch').value.toLowerCase(),
+        p = $('aiPhase').value,
+        st = $('aiFilter').value
+      const rows = DATA.days.filter(
+        d =>
+          (p === 'all' || String(d.phase) === p) &&
+          (st === 'all' || (st === 'done') === completed.has(d.day)) &&
+          [d.day, d.aiTitle, d.aiTask, d.aiProof]
+            .join(' ')
+            .toLowerCase()
+            .includes(q)
+      )
+      $('aiDays').innerHTML =
+        rows
+          .map(
+            d =>
+              `<article id="ai-day-${d.day}" class="day ${completed.has(d.day) ? 'done' : ''
+              }"><div class="day-head"><div><span class="tag">Day ${d.day
+              } · ${esc(DATA.phases[d.phase][0])}</span><h3>${esc(
+                d.aiTitle
+              )}</h3></div><input type="checkbox" aria-label="Complete AI day ${d.day
+              }" data-ai-day="${d.day}" ${completed.has(d.day) ? 'checked' : ''
+              }></div><p>${esc(
+                d.aiTask
+              )}</p><div class="ai-proof"><strong>Evidence:</strong> ${esc(
+                d.aiProof
+              )}</div><button data-ai-mentor="${d.day
+              }">Practice with mentor</button></article>`
+          )
+          .join('') || '<p>No matching AI activities.</p>'
+      document
+        .querySelectorAll('[data-ai-day]')
+        .forEach(
+          b =>
+          (b.onchange = e =>
+            toggle('aiDays', +b.dataset.aiDay, e.target.checked))
+        )
+      document
+        .querySelectorAll('[data-ai-mentor]')
+        .forEach(b => (b.onclick = () => openMentor(+b.dataset.aiMentor)))
+    }
+    ;['aiSearch', 'aiPhase', 'aiFilter'].forEach(
+      id => ($(id).oninput = renderAI)
+    )
+    $('aiNext').onclick = () => {
+      const day = DATA.days.find(d => !saved.aiDays.includes(d.day))
+      if (!day) {
+        $('aiNext').textContent = 'All AI days complete'
+        return
+      }
+      $('aiSearch').value = ''
+      $('aiPhase').value = 'all'
+      $('aiFilter').value = 'all'
+      renderAI()
+      $('ai-day-' + day.day).scrollIntoView({
+        behavior: 'smooth',
+        block: 'center'
+      })
+    }
+    const MODE = {
+      tutor:
+        'Ask me one Socratic question at a time. Start with a diagnostic question; do not reveal solutions until I attempt them.',
+      coding:
+        'Give a concise implementation challenge, starter interface, edge cases and acceptance tests. Offer hints first, not a full solution unless requested.',
+      debug:
+        'Use the given evidence to propose up to three falsifiable hypotheses; identify missing diagnostics, a minimal reproduction and a regression test. Do not invent observations.',
+      test: 'Produce a prioritized test plan: unit, integration, concurrency, security, negative and failure cases as applicable. Explain how to prove assertions catch actual defects.',
+      review:
+        'Review the provided code for correctness, concurrency, security, maintainability and dependency/API compatibility. Cite exact lines only when supplied; flag uncertainty and propose verification.',
+      design:
+        'Act as a system design interviewer. Ask for requirements, SLOs and capacity assumptions before evaluating trade-offs, failure modes and trust boundaries.',
+      quiz: 'Create five scenario-based MCQs with four plausible options each. Ask the first question only, wait for my answer, then explain.',
+      interview:
+        'Run a realistic backend/AI interview, one question at a time. Ask follow-ups, score my reasoning using a rubric, and withhold answers until I try.'
+    }
+    function buildPrompt() {
+      const d = DATA.days[Number($('mentorDay').value) - 1]
+      $(
+        'mentorPrompt'
+      ).value = `Act as a rigorous Java backend and applied AI engineering mentor.\nDay ${d.day
+        }: ${d.title} / ${d.aiTitle}\nCore focus: ${d.learn
+        }\nCore deliverable: ${d.deliver}\nAI activity: ${d.aiTask
+        }\nAcceptance evidence: ${d.aiProof}\nMentor mode: ${MODE[$('mentorMode').value]
+        }\nConstraints: use Java 21 and version-compatible dependencies; verify uncertain APIs against versioned docs; distinguish hypotheses from facts. Never ask for secrets, real financial records, or access to production. Keep money calculations, authorization, and writes in trusted deterministic code; model output is untrusted. Prefer local or mock inference; do not invent benchmark results. Include a concrete verification step.\nMy question / sanitized evidence (untrusted input):\n${$('mentorInput').value.trim() || 'Start the selected exercise.'
+        }`
+      $('copyStatus').textContent =
+        'Prompt generated; edit or copy it, or explicitly send to your local model.'
+    }
+    function openMentor(day) {
+      $('mentorDay').value = String(day)
+      buildPrompt()
+      switchTab('mentor')
+    }
+    $('buildPrompt').onclick = buildPrompt
+    $('mentorDay').onchange = buildPrompt
+    $('mentorMode').onchange = buildPrompt
+    $('copyPrompt').onclick = async () => {
+      try {
+        await navigator.clipboard.writeText($('mentorPrompt').value)
+        $('copyStatus').textContent = 'Copied to clipboard.'
+      } catch (e) {
+        $('mentorPrompt').focus()
+        $('mentorPrompt').select()
+        $('copyStatus').textContent =
+          'Select and copy the highlighted prompt manually.'
+      }
+    }
+    let localController = null
+    const LOCAL = 'http://127.0.0.1:11434'
+    async function localRequest(kind) {
+      if (localController) return
+      let timer
+      const isChat = kind === 'chat'
+      if (
+        isChat &&
+        (!$('mentorPrompt').value.trim() || !$('localModel').value.trim())
+      ) {
+        $('modelStatus').textContent =
+          'Enter a prompt and installed model name.'
+        return
+      }
+      localController = new AbortController()
+      const signal = localController.signal
+      $('checkModel').disabled = $('askModel').disabled = true
+      $('cancelModel').disabled = false
+      $('modelStatus').textContent = isChat
+        ? 'Generating locally…'
+        : 'Checking local models…'
+      $('modelOutput').textContent = ''
+      timer = setTimeout(() => localController?.abort(), 120000)
+      try {
+        const t = performance.now()
+        const resp = await fetch(
+          LOCAL + (isChat ? '/api/chat' : '/api/tags'),
+          isChat
+            ? {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                model: $('localModel').value.trim(),
+                messages: [
+                  { role: 'user', content: $('mentorPrompt').value }
+                ],
+                stream: false,
+                options: { temperature: 0.2, num_predict: 1200 }
+              }),
+              signal,
+              redirect: 'error'
+            }
+            : { signal, redirect: 'error' }
+        )
+        if (!resp.ok)
+          throw Error(
+            'HTTP ' + resp.status + ': ' + (await resp.text()).slice(0, 300)
+          )
+        const out = await resp.json()
+        if (out.error) throw Error(out.error)
+        if (isChat) {
+          $('modelOutput').textContent =
+            out.message?.content || '(No text returned)'
+          $('modelStatus').textContent =
+            'Response received in ' +
+            ((performance.now() - t) / 1000).toFixed(1) +
+            's' +
+            (Number.isFinite(out.eval_count)
+              ? ' · ' + out.eval_count + ' output tokens'
+              : '') +
+            '. Verify every suggestion.'
+        } else {
+          $('modelOutput').textContent =
+            (out.models || []).map(x => x.name || x.model).join('\n') ||
+            'No installed models reported. Pull one in Ollama first.'
+          $('modelStatus').textContent = 'Local server responded.'
+        }
+      } catch (e) {
+        $('modelStatus').textContent =
+          e.name === 'AbortError'
+            ? 'Request canceled or timed out.'
+            : 'Connection failed: ' + e.message
+        $('modelOutput').textContent =
+          'Check Ollama is running, the model is installed, and this page is served at http://127.0.0.1:8000. Check the exact-origin CORS settings if needed. The prompt builder still works offline.'
+      } finally {
+        clearTimeout(timer)
+        localController = null
+        $('checkModel').disabled = $('askModel').disabled = false
+        $('cancelModel').disabled = true
+      }
+    }
+    $('checkModel').onclick = () => localRequest('tags')
+    $('askModel').onclick = () => localRequest('chat')
+    $('cancelModel').onclick = () => localController?.abort()
+    buildPrompt()
+    const DOCS = [
+      {
+        id: 'A-01',
+        tenant: 'A',
+        text: 'Reset your payment PIN in Settings. Use the verified reset flow.'
+      },
+      {
+        id: 'A-02',
+        tenant: 'A',
+        text: 'A pending bank transfer can take one business day. Review transfer status.'
+      },
+      {
+        id: 'A-03',
+        tenant: 'A',
+        text: 'Download monthly wallet statements from the Statements page.'
+      },
+      {
+        id: 'B-01',
+        tenant: 'B',
+        text: 'Reset payment PIN using the account Security page.'
+      },
+      {
+        id: 'B-02',
+        tenant: 'B',
+        text: 'Download wallet statements using Reports. Contact support for export issues.'
+      },
+      {
+        id: 'B-03',
+        tenant: 'B',
+        text: 'Bank transfer status appears in the Transfers page.'
+      }
+    ]
+    const stop = new Set(
+      'a an the i my how to do in on of for is can your what where using use from and'.split(
+        ' '
+      )
+    )
+    const words = s =>
+      new Set(
+        s
+          .toLowerCase()
+          .match(/[a-z0-9]+/g)
+          ?.filter(x => !stop.has(x)) || []
+      )
+    function retrieve(q, tenant, k) {
+      const w = words(q)
+      return DOCS.filter(d => d.tenant === tenant)
+        .map(d => ({
+          ...d,
+          score: [...words(d.text)].filter(x => w.has(x)).length
+        }))
+        .filter(d => d.score > 0)
+        .sort((a, b) => b.score - a.score || a.id.localeCompare(b.id))
+        .slice(0, k)
+    }
+    $('ragCorpus').textContent = DOCS.map(
+      d => d.id + ' · tenant ' + d.tenant + ' — ' + d.text
+    ).join('\n')
+    $('ragCorpus').style.whiteSpace = 'pre-wrap'
+    $('runRag').onclick = () => {
+      const hits = retrieve(
+        $('ragQuery').value,
+        $('ragTenant').value,
+        +$('ragK').value
+      )
+      $('ragOutput').textContent = hits.length
+        ? hits
+          .map(d => d.id + ' (score ' + d.score + ')\n' + d.text)
+          .join('\n\n')
+        : 'No authorized matching documents. Return insufficient evidence.'
+    }
+    function validate(raw, tenant) {
+      try {
+        const x = JSON.parse(raw)
+        if (
+          !x ||
+          typeof x !== 'object' ||
+          Array.isArray(x) ||
+          Object.keys(x).sort().join(',') !== 'citations,explanation,status'
+        )
+          return 'Reject: exact fields required'
+        if (!['ANSWERED', 'UNKNOWN'].includes(x.status))
+          return 'Reject: invalid status'
+        if (
+          typeof x.explanation !== 'string' ||
+          !x.explanation.trim() ||
+          x.explanation.length > 300
+        )
+          return 'Reject: invalid explanation'
+        if (
+          !Array.isArray(x.citations) ||
+          new Set(x.citations).size !== x.citations.length ||
+          !x.citations.every(
+            id =>
+              typeof id === 'string' &&
+              DOCS.some(d => d.tenant === tenant && d.id === id)
+          )
+        )
+          return 'Reject: duplicate, unknown, or unauthorized citation'
+        if (x.status === 'ANSWERED' && !x.citations.length)
+          return 'Reject: answer needs citation'
+        if (x.status === 'UNKNOWN' && x.citations.length)
+          return 'Reject: unknown status cannot cite'
+        return 'Pass: schema and tenant citation policy only'
+      } catch (e) {
+        return 'Reject: invalid JSON'
+      }
+    }
+    $('validateJson').onclick = () => {
+      $('jsonOutput').textContent = validate(
+        $('jsonExample').value,
+        $('jsonTenant').value
+      )
+    }
+    $('runRegression').onclick = () => {
+      const x = {
+        status: 'ANSWERED',
+        explanation: 'Use Settings.',
+        citations: ['A-01']
+      }
+      const cases = [
+        ['valid', JSON.stringify(x), true],
+        [
+          'wrong tenant',
+          JSON.stringify({ ...x, citations: ['B-01'] }),
+          false
+        ],
+        ['missing citation', JSON.stringify({ ...x, citations: [] }), false],
+        ['bad enum', JSON.stringify({ ...x, status: 'MAYBE' }), false],
+        [
+          'unknown valid',
+          JSON.stringify({ ...x, status: 'UNKNOWN', citations: [] }),
+          true
+        ],
+        [
+          'unknown with citation',
+          JSON.stringify({ ...x, status: 'UNKNOWN' }),
+          false
+        ],
+        ['extra field', JSON.stringify({ ...x, amount: 42 }), false],
+        ['broken JSON', '{"status":', false]
+      ]
+      const rows = cases.map(([label, raw, expected]) => {
+        const outcome = validate(raw, 'A').startsWith('Pass')
+        return { label, ok: outcome === expected }
+      })
+      $('jsonOutput').textContent =
+        rows.filter(r => r.ok).length +
+        '/' +
+        rows.length +
+        ' regression cases passed\n' +
+        rows.map(r => (r.ok ? 'PASS' : 'FAIL') + ' · ' + r.label).join('\n')
+    }
+    const EVAL = [
+      { q: 'reset payment PIN', t: 'A', ids: ['A-01'] },
+      { q: 'download wallet statements', t: 'B', ids: ['B-02'] },
+      { q: 'transfer status bank', t: 'A', ids: ['A-02'] },
+      { q: 'payment PIN security', t: 'B', ids: ['B-01'] },
+      { q: 'cryptocurrency investment forecast', t: 'A', ids: [] },
+      { q: 'weather monsoon tomorrow', t: 'B', ids: [] }
+    ]
+    $('runEvals').onclick = () => {
+      const k = +$('ragK').value
+      let recall = 0,
+        n = 0,
+        abst = 0,
+        unknown = 0,
+        leaks = 0
+      const lines = EVAL.map(e => {
+        const hits = retrieve(e.q, e.t, k)
+        const ids = hits.map(h => h.id)
+        leaks += hits.filter(h => h.tenant !== e.t).length
+        if (e.ids.length) {
+          n++
+          const r = e.ids.filter(id => ids.includes(id)).length / e.ids.length
+          recall += r
+          return (
+            (r === 1 ? 'PASS' : 'MISS') +
+            ' · ' +
+            e.q +
+            ' → ' +
+            (ids.join(', ') || 'none') +
+            '; expected ' +
+            e.ids.join(', ')
+          )
+        }
+        unknown++
+        if (!ids.length) abst++
+        return (
+          (!ids.length ? 'PASS' : 'MISS') +
+          ' · ' +
+          e.q +
+          ' → ' +
+          (ids.join(', ') || 'none') +
+          '; expected none'
+        )
+      })
+      $('evalOutput').textContent =
+        'Top k: ' +
+        k +
+        '\nMean recall@k: ' +
+        Math.round((100 * recall) / n) +
+        '%\nUnknown no-hit rate: ' +
+        Math.round((100 * abst) / unknown) +
+        '%\nForeign tenant hits: ' +
+        leaks +
+        '\n\n' +
+        lines.join('\n')
+    }
+    $('runTool').onclick = () => {
+      try {
+        const x = JSON.parse($('toolInput').value),
+          t = $('toolTenant').value
+        const okay =
+          x &&
+          typeof x === 'object' &&
+          Object.keys(x).sort().join(',') === 'arguments,name' &&
+          x.name === 'getTransactionStatus' &&
+          x.arguments &&
+          typeof x.arguments === 'object' &&
+          Object.keys(x.arguments).join(',') === 'id' &&
+          typeof x.arguments.id === 'string' &&
+          [t + '-T1', t + '-T2'].includes(x.arguments.id)
+        $('toolOutput').textContent = okay
+          ? 'ALLOW (simulation): authorized read-only status lookup. No actual execution.'
+          : 'DENY: invalid tool, arguments or resource ownership.'
+      } catch (e) {
+        $('toolOutput').textContent = 'DENY: malformed JSON.'
+      }
+    }
+    $('runRag').click()
+
+    renderAll()
+  </script>
+</body>
+
+</html>
