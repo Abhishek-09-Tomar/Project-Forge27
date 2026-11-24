@@ -83,8 +83,10 @@ I am **Abhishek Tomar**, a final-year B.Tech Computer Science and Engineering st
 
 <div align="center">
 
-<a href="https://www.youtube.com/watch?v=31KTdfRH6nY"><img src="https://i.ytimg.com/vi/31KTdfRH6nY/hqdefault.jpg" width="42%" alt="Dan Vega Spring Boot 3 course thumbnail" /></a>
-<a href="https://www.youtube.com/watch?v=FzLABAppJfM"><img src="https://i.ytimg.com/vi/FzLABAppJfM/hqdefault.jpg" width="42%" alt="Dan Vega Spring AI workshop thumbnail" /></a>
+<a href="https://youtu.be/7-lK9EpBS_Y"><img src="https://i.ytimg.com/vi/7-lK9EpBS_Y/hqdefault.jpg" width="42%" alt="Spring Boot course thumbnail" /></a>
+<a href="https://www.youtube.com/watch?v=Q04sTEwC7Kg&amp;list=PLEYgx5hMdopw"><img src="https://i.ytimg.com/vi/Q04sTEwC7Kg/hqdefault.jpg" width="42%" alt="Spring AI course thumbnail" /></a>
+
+</div>
 
 **Spring Boot 3 (backend anchor) · Spring AI (AI anchor)**
 
